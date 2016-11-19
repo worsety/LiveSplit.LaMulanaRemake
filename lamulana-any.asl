@@ -21,16 +21,17 @@ gameTime
 init
 {
 
-	Func<int,byte> getbyte = (x) => { return memory.ReadValue<byte>(modules.First().BaseAddress + 0x2D7E80 + x); };
-	Func<int,short> getword = (x) => { return new DeepPointer(0x2D7858, x * 2).Deref<short>(game); };
+	Func<int,byte> getbyte = (x) => (memory.ReadValue<byte>(modules.First().BaseAddress + 0x2D7E80 + x));
+	Func<int,short> getword = (x) => (new DeepPointer(0x2D7858, x * 2).Deref<short>(game));
+	Func<bool> inshop = () => (0x800000 == (current.flags4 & 0x800000));
 	vars.splits = new Func<bool>[] {
 		//() => (getbyte(0x07b) == 12), // talked to xelpud twice
 		//() => (getbyte(0x14f) == 2), // deathv?
 		//() => (getbyte(0x147) == 1), // ruins shortcut
 		//() => (getbyte(0x0c7) == 2), // sacred orb: guidance
 		//() => (getbyte(0x0a9) == 2), // grail
-		() => (getbyte(0x0ba) >= 1), // hermes boots
-		() => (getword(0x01b) == 0x9d), // dragon bone, why 9d!??? It's never replaced
+		() => (getbyte(0x0ba) == 2), // hermes boots
+		() => (getword(0x01b) == 0x9d && !inshop()), // dragon bone, why 9d!??? It's never replaced
 		() => (getbyte(0x0f8) == 3), // ellmac
 		() => (getbyte(0x0f9) == 3), // bahamut
 		() => (getbyte(0x0f7) == 3), // sakit
