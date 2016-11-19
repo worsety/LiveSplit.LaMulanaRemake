@@ -27,7 +27,7 @@ namespace LiveSplit.LaMulanaRemake
 
         public IComponent Create(LiveSplitState state)
         {
-            return new LMRComponent();
+            return new LaMulanaComponent();
         }
 
         public Version Version

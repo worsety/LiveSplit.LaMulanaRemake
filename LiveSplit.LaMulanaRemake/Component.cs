@@ -7,7 +7,7 @@ using System.Xml;
 
 namespace LiveSplit.LaMulanaRemake
 {
-    public class LMRComponent : IComponent
+    public class LaMulanaComponent : IComponent
     {
         public string ComponentName
         {
@@ -25,36 +25,99 @@ namespace LiveSplit.LaMulanaRemake
         public float PaddingTop => 0;
         public float PaddingBottom => 0;
 
-        public LMRSplitter autosplitter;
+        public SplitMatcher autosplitter;
+        public SplitMatcher remake = new RemakeSplitter();
+        // Maybe some day
+        // public SplitMatcher classic = new ClassicSplitter();
 
-        public void Dispose() { }
+        public LiveSplitState state;
+        public TimerModel timer;
 
-        public LMRComponent()
+        public ComponentSettings settings_control;
+
+        public void Dispose() {
+            if (state != null)
+                state.RunManuallyModified -= RunModified;
+        }
+
+        public LaMulanaComponent()
         {
+            settings_control = new ComponentSettings(this);
+        }
 
+        void RunModified(object sender, EventArgs a)
+        {
+            if (state.Run.GameName == "La-Mulana Remake")
+                autosplitter = remake;
+            /*else if (state.Run.GameName == "La-Mulana Classic")
+                autosplitter = classic;*/
+            else
+                autosplitter = null;
+            settings_control.SetSplits(state, remake);
         }
 
         public void DrawHorizontal(System.Drawing.Graphics g, LiveSplitState state, float height, System.Drawing.Region clipRegion) { }
 
         public void DrawVertical(System.Drawing.Graphics g, LiveSplitState state, float width, System.Drawing.Region clipRegion) { }
 
-        public XmlNode GetSettings(XmlDocument document)
-        {
-            return document.CreateElement("x");
-        }
-
         public System.Windows.Forms.Control GetSettingsControl(LayoutMode mode)
         {
-            return null;
+            return settings_control;
+        }
+
+        public XmlNode GetSettings(XmlDocument document)
+        {
+            remake.splits = settings_control.GetSplitMap(remake);
+
+            XmlElement settings = document.CreateElement("Settings");
+            XmlElement remakesettings = document.CreateElement("Remake");
+            XmlElement remakemapping = document.CreateElement("Mapping");
+            foreach (var cat in remake.splits)
+            {
+                XmlElement e = document.CreateElement("Map");
+                e.SetAttribute("from", cat.Key);
+                e.SetAttribute("to", cat.Value);
+                remakemapping.AppendChild(e);
+            }
+            remakesettings.AppendChild(remakemapping);
+            settings.AppendChild(remakesettings);
+
+            return settings;
         }
 
         public void SetSettings(XmlNode settings)
         {
+            XmlNode remakemapping = settings.SelectSingleNode("./Remake/Mapping");
+            if (remakemapping != null)
+            {
+                Dictionary<string, string> map = new Dictionary<string, string>();
+                foreach (XmlElement e in remakemapping.SelectNodes("./Map"))
+                {
+                    string username = e.GetAttribute("from"), intname = e.GetAttribute("to");
+                    if (username != "" && intname != "" && remake.intsplits.ContainsKey(intname))
+                        map.Add(username.Normalize().ToLowerInvariant(), intname);
+                }
+
+                remake.splits = map;
+            }
+            settings_control.SetSplits(state, remake);
         }
 
         public void Update(IInvalidator invalidator, LiveSplitState state, float width, float height, LayoutMode mode)
         {
-            autosplitter.Update(state);
+            if (this.state == null)
+            {
+                this.state = state;
+                if (timer == null || timer.CurrentState != state)
+                    timer = new TimerModel { CurrentState = state };
+                state.RunManuallyModified += RunModified;
+                RunModified(state, null);
+            }
+            try
+            {
+                autosplitter?.Update(state, timer);
+            }
+            catch { }
         }
     }
 }
