@@ -5,8 +5,23 @@ using LiveSplit.UI.Components;
 using System.Collections.Generic;
 using System.Xml;
 
+[assembly: ComponentFactory(typeof(LiveSplit.LaMulanaRemake.Factory))]
+
 namespace LiveSplit.LaMulanaRemake
 {
+    public class Factory : IComponentFactory
+    {
+        public string ComponentName => "La-Mulana Remake Auto Splitter";
+        public string Description => "Autosplitter for La-Mulana (remake)";
+        public ComponentCategory Category => ComponentCategory.Control;
+        public IComponent Create(LiveSplitState state) => new LaMulanaComponent(state);
+
+        public Version Version => new Version(0, 2, 0);
+        public string UpdateName => ComponentName;
+        public string UpdateURL => "https://worsety.github.io/files/LiveSplit.LaMulanaRemake/";
+        public string XMLURL => "https://worsety.github.io/files/LiveSplit.LaMulanaRemake/updates.xml";
+    }
+
     public class LaMulanaComponent : IComponent
     {
         public string ComponentName
@@ -40,9 +55,16 @@ namespace LiveSplit.LaMulanaRemake
                 state.RunManuallyModified -= RunModified;
         }
 
-        public LaMulanaComponent()
+        public LaMulanaComponent(LiveSplitState state)
         {
+            this.state = state;
+            if (timer == null || timer.CurrentState != state)
+                timer = new TimerModel { CurrentState = state };
+
             settings_control = new ComponentSettings(this);
+
+            state.RunManuallyModified += RunModified;
+            RunModified(state, null);
         }
 
         void RunModified(object sender, EventArgs a)
@@ -105,14 +127,6 @@ namespace LiveSplit.LaMulanaRemake
 
         public void Update(IInvalidator invalidator, LiveSplitState state, float width, float height, LayoutMode mode)
         {
-            if (this.state == null)
-            {
-                this.state = state;
-                if (timer == null || timer.CurrentState != state)
-                    timer = new TimerModel { CurrentState = state };
-                state.RunManuallyModified += RunModified;
-                RunModified(state, null);
-            }
             try
             {
                 autosplitter?.Update(state, timer);
