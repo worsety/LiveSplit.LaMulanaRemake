@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace EyeOfTruth
 {
@@ -10,6 +11,13 @@ namespace EyeOfTruth
         };
         Offsets? offsets;
         string version;
+
+        Dictionary<string, Offsets?> veroffsets = new Dictionary<string, Offsets?>
+        {
+            {"1.0.0.1", new Offsets { bytes = 0x2D5A70, wordsptr = 0x2D5650, flags = 0x2D59C0, igt = 0x2D5044 } },
+            {"1.3.3.1", new Offsets { bytes = 0x2D7E80, wordsptr = 0x2D7858, flags = 0x2D7BC8, igt = 0x2D724C } },
+            {"1.5.5.2", new Offsets { bytes = 0x2E1E48, wordsptr = 0x2E1820, flags = 0x2E1B90, igt = 0x2E1214 } },
+        };
 
         public override bool Attach()
         {
@@ -23,12 +31,8 @@ namespace EyeOfTruth
                 return true;
 
             version = proc.MainModule.FileVersionInfo.FileVersion;
-            if (proc.MainModule.FileVersionInfo.FileVersion == "1.3.3.1")
-                offsets = new Offsets { bytes = 0x2D7E80, wordsptr = 0x2D7858, flags = 0x2D7BC8, igt = 0x2D724C };
-            if (proc.MainModule.FileVersionInfo.FileVersion == "1.5.5.2")
-                offsets = new Offsets { bytes = 0x2E1E48, wordsptr = 0x2E1820, flags = 0x2E1B90, igt = 0x2E1214 };
-
-            if (offsets == null)
+            
+            if (!veroffsets.TryGetValue(version, out offsets))
                 return false;
 
             for (int i = 0; i < 0x1000; i++)
