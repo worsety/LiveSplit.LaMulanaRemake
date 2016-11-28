@@ -7,9 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveSplit.LaMulanaRemake", 
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "EyeOfTruth.Shared", "EyeOfTruth.Shared\EyeOfTruth.Shared.shproj", "{AED5C79E-1853-48B3-8AC2-232091E13FC7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleEye", "ConsoleEye\ConsoleEye.csproj", "{68CA971C-51F9-480D-ADED-EBD7D31C9CCE}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		EyeOfTruth.Shared\EyeOfTruth.Shared.projitems*{aed5c79e-1853-48b3-8ac2-232091e13fc7}*SharedItemsImports = 13
+		EyeOfTruth.Shared\EyeOfTruth.Shared.projitems*{68ca971c-51f9-480d-aded-ebd7d31c9cce}*SharedItemsImports = 4
 		EyeOfTruth.Shared\EyeOfTruth.Shared.projitems*{71820ec4-6add-4ad7-93e6-f467e16433ec}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +24,10 @@ Global
 		{71820EC4-6ADD-4AD7-93E6-F467E16433EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71820EC4-6ADD-4AD7-93E6-F467E16433EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71820EC4-6ADD-4AD7-93E6-F467E16433EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68CA971C-51F9-480D-ADED-EBD7D31C9CCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68CA971C-51F9-480D-ADED-EBD7D31C9CCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68CA971C-51F9-480D-ADED-EBD7D31C9CCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68CA971C-51F9-480D-ADED-EBD7D31C9CCE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

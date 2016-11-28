@@ -27,19 +27,19 @@ namespace LiveSplit.LaMulanaRemake
 
         void AddItem(string name, Func<bool> pred)
         {
-            intsplits[name] = pred;
+            intsplits[name] = () => pred() && !inshop();
             items.Add(name);
         }
 
         void AddItemB(string name, int byteidx, int value = 2)
         {
-            intsplits[name] = () => (getbyte(byteidx) == value);
+            intsplits[name] = () => (getbyte(byteidx) == value && !inshop());
             items.Add(name);
         }
 
-        void AddItemW(string name, int byteidx, int value = 1)
+        void AddItemW(string name, int wordidx, int value = 1)
         {
-            intsplits[name] = () => (getword(byteidx) == value);
+            intsplits[name] = () => (getword(wordidx) == value && !inshop());
             items.Add(name);
         }
 
@@ -72,7 +72,7 @@ namespace LiveSplit.LaMulanaRemake
             AddItemB("deathv.exe", 0x14f);
             AddItemB("Guidance orb", 0x0c7);
             AddItemB("Grail", 0x0a9);
-            AddItem("Hand scanner", () => (getword(0x014) == 1 && !inshop()));
+            AddItemW("Hand scanner", 0x014);
             AddEvent("Guidance grail", 0x064);
             AddItemW("Shurikens", 0x008);
             AddItemW("Caltrops", 0x00e);
@@ -96,7 +96,7 @@ namespace LiveSplit.LaMulanaRemake
             AddItemB("Mausoleum orb", 0x0c9);
             AddEvent("Sakit ankh", 0x164);
             AddItemB("Helmet", 0x0ac);
-            AddItem("Dragon Bone", () => (getword(0x01b) == 0x9d && !inshop()));
+            AddItemW("Dragon Bone", 0x01b, 0x9d);
             AddEvent("Black witch", 0x1df);
             AddEvent("Nuckelavee", 0x191);
             AddItemB("Origin seal", 0x0c2);
