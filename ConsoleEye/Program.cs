@@ -18,7 +18,6 @@ namespace CrappyConsoleEye
 
             try
             {
-                XElement namesdoc = XElement.Load("names.xml");
                 foreach (XElement item in XElement.Load("names.xml").Descendants("item"))
                     try
                     {
