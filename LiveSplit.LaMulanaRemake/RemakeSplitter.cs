@@ -300,6 +300,14 @@ namespace LiveSplit.LaMulanaRemake
 
             AddEvent("Coin chest: Mausoleum", 0x166);
 
+            AddEvent("Xelpud's e-mail #00", 0x2ee);
+            AddEvent("Xelpud's e-mail #01", 0x2ef);
+            AddEvent("Xelpud's e-mail #02", 0x349);
+            AddEvent("Xelpud's e-mail #03", 0x36e);
+            for (int i = 0; i < 41; i++)
+                AddEvent(String.Format("Xelpud's e-mail #{0:D2}", i + 4), 0x2f0 + i);
+            AddEvent("Xelpud's e-mails (all)", 0x328, 45);
+
             guardians.Sort();
             splitcats.Add("Guardians", guardians);
             items.Sort();
