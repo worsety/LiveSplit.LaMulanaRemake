@@ -283,7 +283,7 @@ namespace LiveSplit.LaMulanaRemake
             AddEvent("Black witch", 0x1df);
 
             AddEvent("Visit fairy queen", 0x1f5, 1);
-            AddEvent("Fairies", 0x1f5, 2);
+            AddEvent("Fairies", 0x118); // this is the actual fairy points condition, 1f5 is the fairy queen's dialogue for the first two visits
 
             AddEvent("Eden", 0x226);
             AddEvent("Read cogs tablets", () => (getbyte(0x23b) >= 1 && getbyte(0x23c) >= 1 && getbyte(0x23d) >= 1));
