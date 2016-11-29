@@ -10,27 +10,36 @@ namespace CrappyConsoleEye
 {
     class Program
     {
-        static void Main(string[] args)
+        static Dictionary<string, string> displaynames = new Dictionary<string, string>();
+
+        static void loadnames()
         {
-            DateTime start = DateTime.UtcNow, now = DateTime.UtcNow;
-            LaMulanaRemake game = new LaMulanaRemake();
-            Dictionary<string, string> displaynames = new Dictionary<string, string>();
+            Dictionary<string, string> tempnames = new Dictionary<string, string>();
 
             try
             {
                 foreach (XElement item in XElement.Load("names.xml").Descendants("item"))
                     try
                     {
-                        displaynames.Add(item.Attribute("id").Value, item.Attribute("value").Value);
+                        tempnames.Add(item.Attribute("id").Value, item.Attribute("value").Value);
                     }
                     catch (ArgumentException)
                     {
                         System.Console.WriteLine("\"{0}\" is already mapped to \"{1}\", duplicate line in names.xml is trying to also map it to \"{2}\"",
-                            item.Attribute("id").Value, displaynames[item.Attribute("id").Value], item.Attribute("value").Value);
+                            item.Attribute("id").Value, tempnames[item.Attribute("id").Value], item.Attribute("value").Value);
                     }
+                displaynames = tempnames;
             }
             catch (System.IO.FileNotFoundException) { System.Console.WriteLine("Absent names.xml"); }
+            catch (System.IO.IOException) { System.Console.WriteLine("Error reading names.xml"); }
             catch (System.Xml.XmlException) { System.Console.WriteLine("Malformed names.xml"); }
+        }
+
+        static void Main(string[] args)
+        {
+            DateTime start = DateTime.UtcNow, now = DateTime.MinValue, checkednames = DateTime.MinValue;
+            LaMulanaRemake game = new LaMulanaRemake();
+            System.IO.FileInfo xmlfi1 = null, xmlfi2;
 
             MemoryWatcherList.MemoryWatcherDataChangedEventHandler changehandler =
                 (MemoryWatcher w) =>
@@ -57,6 +66,13 @@ namespace CrappyConsoleEye
             while (true)
             {
                 Thread.Sleep(5);
+                if (DateTime.UtcNow - checkednames > TimeSpan.FromSeconds(1))
+                {
+                    xmlfi2 = new System.IO.FileInfo("names.xml");
+                    if (xmlfi1 == null || xmlfi1.LastWriteTimeUtc != xmlfi2.LastWriteTimeUtc)
+                        loadnames();
+                    xmlfi1 = xmlfi2;
+                }
                 try
                 {
                     if (!game.Attach())
