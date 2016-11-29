@@ -4,6 +4,7 @@ using LiveSplit.UI;
 using LiveSplit.UI.Components;
 using System.Collections.Generic;
 using System.Xml;
+using System.Linq;
 
 [assembly: ComponentFactory(typeof(LiveSplit.LaMulanaRemake.Factory))]
 
@@ -112,15 +113,15 @@ namespace LiveSplit.LaMulanaRemake
             XmlNode remakemapping = settings.SelectSingleNode("./Remake/Mapping");
             if (remakemapping != null)
             {
+                remake.splits.Clear();
+                remake.intsplits.ToList().ForEach(x => remake.splits.Add(x.Key.Normalize().ToLowerInvariant(), x.Key));
                 Dictionary<string, string> map = new Dictionary<string, string>();
                 foreach (XmlElement e in remakemapping.SelectNodes("./Map"))
                 {
                     string username = e.GetAttribute("from"), intname = e.GetAttribute("to");
                     if (username != "" && intname != "" && remake.intsplits.ContainsKey(intname))
-                        map.Add(username.Normalize().ToLowerInvariant(), intname);
+                        remake.splits[username.Normalize().ToLowerInvariant()] = intname;
                 }
-
-                remake.splits = map;
             }
             settings_control.SetSplits(state, remake);
         }
