@@ -273,11 +273,12 @@ namespace LiveSplit.LaMulanaRemake
 
             AddEvent("Buer", 0x17a);
             AddEvent("Jump into the sun puzzle", 0x17e, 2);
+            AddEvent("Mulbruk", 0x391); // there are other flags we could check but this is the one set on the frame where your score is increased to 50, relevant to some routes
 
             AddEvent("Nuckelavee", 0x191);
+            AddEvent("Floodgates", 0x193);
             AddEvent("Left hatch", 0x194);
             AddEvent("Right hatch", 0x195);
-            AddEvent("Floodgates", 0x199);
 
             AddEvent("Peryton", 0x1d8);
             AddEvent("Black witch", 0x1df);
@@ -292,7 +293,7 @@ namespace LiveSplit.LaMulanaRemake
 
             AddEvent("Grind down the watchtower step 1", 0x266, 1);
             AddEvent("Grind down the watchtower", 0x266, 2); // fixme: might include the softlock state
-            AddEvent("Jumped into the sun", 0x267, 1);
+            AddEvent("Jumped into the sun", 0x267, 1); // this actually is the moon splitting I think.  There's also 2ba a bit later, no idea what that is
             AddEvent("Eden spot #2", 0x270);
             AddEvent("Lit the tower of the goddess", 0x271);
             AddEvent("Eden spot #1", 0x29e);
