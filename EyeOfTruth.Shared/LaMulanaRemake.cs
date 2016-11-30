@@ -58,12 +58,12 @@ namespace EyeOfTruth
 
         public byte[] readbytes()
         {
-            return new DeepPointer(offsets.Value.bytes).DerefBytes(proc, 0x1000);
+            return bytesptr.DerefBytes(proc, 0x1000);
         }
 
         public byte[] readwords()
         {
-            return new DeepPointer(offsets.Value.wordsptr, 0).DerefBytes(proc, 512);
+            return wordsptr.DerefBytes(proc, 512);
         }
     }
 }
