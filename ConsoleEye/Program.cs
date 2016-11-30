@@ -35,6 +35,26 @@ namespace CrappyConsoleEye
             catch (System.Xml.XmlException) { System.Console.WriteLine("Malformed names.xml"); }
         }
 
+        static void changed(object cur, object old, string name, TimeSpan timestamp)
+        {
+            string displayname;
+            if (!displaynames.TryGetValue(name, out displayname))
+                displayname = name;
+            if (name.StartsWith("flags")) // flags are interesting but noisy
+                return;
+            if (name == "igt") // so very spammy
+                return;
+
+            string format = "";
+            if (cur is byte || cur is sbyte)
+                format = ":x2";
+            else if (cur is ushort || cur is short)
+                format = ":x4";
+            else if (cur is uint || cur is int)
+                format = ":x8";
+            System.Console.WriteLine("({0,10:f02}) {1,15} := {2" + format + "} from {3" + format + "}", timestamp.TotalSeconds, displayname, cur, old);
+        }
+
         static void Main(string[] args)
         {
             DateTime start = DateTime.UtcNow, now = DateTime.MinValue, checkednames = DateTime.MinValue;
@@ -42,27 +62,10 @@ namespace CrappyConsoleEye
             System.IO.FileInfo xmlfi1 = null, xmlfi2;
 
             MemoryWatcherList.MemoryWatcherDataChangedEventHandler changehandler =
-                (MemoryWatcher w) =>
-                {
-                    object cur = w.Current, old = w.Old;
-                    string name;
-                    if (!displaynames.TryGetValue(w.Name, out name))
-                        name = w.Name;
-                    if (w.Name.StartsWith("flags")) // flags are interesting but noisy
-                        return;
-                    if (w.Name == "igt") // so very spammy
-                        return;
-
-                    string format = "";
-                    if (cur is byte || cur is sbyte)
-                        format = ":x2";
-                    else if (cur is ushort || cur is short)
-                        format = ":x4";
-                    else if (cur is uint || cur is int)
-                        format = ":x8";
-                    System.Console.WriteLine("({0,10:f02}) {1,15} := {2" + format + "} from {3" + format + "}", (now - start).TotalSeconds, name, cur, old);
-                };
+                (MemoryWatcher w) => changed(w.Current, w.Old, w.Name, now - start);
             game.vars.OnWatcherDataChanged += changehandler;
+            byte[] oldbytes = new byte[0x1000], newbytes;
+            byte[] oldwords = new byte[512], newwords;
             while (true)
             {
                 Thread.Sleep(5);
@@ -78,8 +81,25 @@ namespace CrappyConsoleEye
                 {
                     if (!game.Attach())
                         continue;
+                    // I knew that using the MemoryWatchers for over 4000 variables would be slow but god damn it's slow
+                    // let's not do it
+                    game.vars.RemoveAll(x => x.Name.StartsWith("byte") || x.Name.StartsWith("word"));
                     now = DateTime.UtcNow;
                     game.vars.UpdateAll(game.proc);
+                    newbytes = game.readbytes();
+                    newwords = game.readwords();
+                    for (int i = 0; i < 0x1000; i++)
+                        if (newbytes[i] != oldbytes[i])
+                            changed(newbytes[i], oldbytes[i], String.Format("byte-{0:x3}", i), now - start);
+                    for (int i = 0; i < 512; i += 2)
+                    {
+                        ushort oldval = BitConverter.ToUInt16(oldwords, i);
+                        ushort newval = BitConverter.ToUInt16(newwords, i);
+                        if (newval != oldval)
+                            changed(newval, oldval, String.Format("word-{0:x3}", i >> 1), now - start);
+                    }
+                    oldbytes = newbytes;
+                    oldwords = newwords;
                 }
                 catch (Win32Exception) { }
             }

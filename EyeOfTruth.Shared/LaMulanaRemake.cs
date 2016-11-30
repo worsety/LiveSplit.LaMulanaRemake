@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LiveSplit.ComponentUtil;
+using System;
 using System.Collections.Generic;
 
 namespace EyeOfTruth
@@ -19,6 +20,8 @@ namespace EyeOfTruth
             {"1.5.5.2", new Offsets { bytes = 0x2E1E48, wordsptr = 0x2E1820, flags = 0x2E1B90, igt = 0x2E1214 } },
         };
 
+        DeepPointer bytesptr, wordsptr;
+
         public override bool Attach()
         {
             if (!Attach("LaMulanaWin"))
@@ -31,13 +34,15 @@ namespace EyeOfTruth
                 return true;
 
             version = proc.MainModule.FileVersionInfo.FileVersion;
-            
+
             if (!veroffsets.TryGetValue(version, out offsets))
                 return false;
 
+            bytesptr = new DeepPointer(offsets.Value.bytes);
             for (int i = 0; i < 0x1000; i++)
                 vars.Add(new GameVar<byte>(String.Format("byte-{0:x3}", i), offsets.Value.bytes + i));
 
+            wordsptr = new DeepPointer(offsets.Value.wordsptr, 0);
             for (int i = 0; i < 255; i++)
                 vars.Add(new GameVar<ushort>(String.Format("word-{0:x3}", i), offsets.Value.wordsptr, i * 2));
 
@@ -49,6 +54,16 @@ namespace EyeOfTruth
 
             vars.Add(new GameVar<uint>("igt", offsets.Value.igt));
             return true;
+        }
+
+        public byte[] readbytes()
+        {
+            return new DeepPointer(offsets.Value.bytes).DerefBytes(proc, 0x1000);
+        }
+
+        public byte[] readwords()
+        {
+            return new DeepPointer(offsets.Value.wordsptr, 0).DerefBytes(proc, 512);
         }
     }
 }
