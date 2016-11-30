@@ -72,6 +72,7 @@ namespace CrappyConsoleEye
                     if (xmlfi1 == null || xmlfi1.LastWriteTimeUtc != xmlfi2.LastWriteTimeUtc)
                         loadnames();
                     xmlfi1 = xmlfi2;
+                    checkednames = DateTime.UtcNow;
                 }
                 try
                 {
