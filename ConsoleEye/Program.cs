@@ -102,6 +102,7 @@ namespace CrappyConsoleEye
                     oldwords = newwords;
                 }
                 catch (Win32Exception) { }
+                catch (ArgumentNullException) { }
             }
         }
     }
