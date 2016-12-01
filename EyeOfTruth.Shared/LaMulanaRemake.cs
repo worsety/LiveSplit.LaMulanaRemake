@@ -63,7 +63,7 @@ namespace EyeOfTruth
 
         public byte[] readwords()
         {
-            return wordsptr.DerefBytes(proc, 512);
+            return wordsptr.DerefBytes(proc, 510);
         }
     }
 }

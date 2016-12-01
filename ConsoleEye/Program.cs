@@ -65,7 +65,7 @@ namespace CrappyConsoleEye
                 (MemoryWatcher w) => changed(w.Current, w.Old, w.Name, now - start);
             game.vars.OnWatcherDataChanged += changehandler;
             byte[] oldbytes = new byte[0x1000], newbytes;
-            byte[] oldwords = new byte[512], newwords;
+            byte[] oldwords = new byte[510], newwords;
             while (true)
             {
                 Thread.Sleep(5);
@@ -91,7 +91,7 @@ namespace CrappyConsoleEye
                     for (int i = 0; i < 0x1000; i++)
                         if (newbytes[i] != oldbytes[i])
                             changed(newbytes[i], oldbytes[i], String.Format("byte-{0:x3}", i), now - start);
-                    for (int i = 0; i < 512; i += 2)
+                    for (int i = 0; i < 510; i += 2)
                     {
                         ushort oldval = BitConverter.ToUInt16(oldwords, i);
                         ushort newval = BitConverter.ToUInt16(newwords, i);
