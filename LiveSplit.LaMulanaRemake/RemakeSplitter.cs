@@ -310,6 +310,21 @@ namespace LiveSplit.LaMulanaRemake
             AddCond(bytege(0x199, 1), "Aqueduct");
             AddCond(bytege(0x194, 1), "Left hatch");
             AddCond(bytege(0x195, 1), "Right hatch");
+            AddCond(bytege(0x078, 1), "Giltoriyo");
+            EndCat();
+
+            StartCat("Inferno Cavern");
+            AddCond(bytege(0x1b4, 1), "Inferno ankh 1", "Ankh: triggered dais rising");
+            AddCond(bytege(0x1b4, 4), "Inferno ankh 4", "Ankh: placed weight");
+            AddCond(bytege(0x1b3, 1), "Flare puzzle wall");
+            EndCat();
+
+            StartCat("Chamber of Extinction");
+            AddCond(bytege(0x1c3, 1), "Extinction ankh 1", "Palenque ankh step 1");
+            AddCond(bytege(0x1c3, 3), "Extinction ankh 3", "Palenque ankh step 2");
+            AddCond(bytege(0x1c6, 1), "Centimani");
+            AddCond(bytege(0x1cb, 1), "Ox-head and Horse-face");
+            AddCond(bytege(0x1c7, 1), "Lit mantra.exe mural");
             EndCat();
 
             StartCat("Twin Labyrinths");
@@ -317,6 +332,9 @@ namespace LiveSplit.LaMulanaRemake
             AddCond(bytege(0x1e2, 1), "Zu");
             AddCond(bytege(0x1df, 1), "Black witch");
             AddCond(bytege(0x1e0, 1), "White witch");
+            AddCond(bytege(0x1e5, 1), "Reveal light (left)");
+            AddCond(bytege(0x1de, 1), "Reveal light (right)");
+            AddCond(bytege(0x1dc, 2), "Release the twins");
             EndCat();
 
             StartCat("Endless Corridor");
@@ -324,9 +342,22 @@ namespace LiveSplit.LaMulanaRemake
             AddCond(bytenz(0x118), "Fairies"); // this is the actual fairy points condition, 1f5 is the fairy queen's dialogue for the first two visits
             EndCat();
 
+            StartCat("Shrine of the Mother");
+            AddCond(bytege(0x218, 1), "Placed Dragon Bone");
+            AddCond(bytege(0x4e2, 1), "Shrine La-Mulanese", "La-Mulanese tablet");
+            EndCat();
+
             StartCat("Gate of Illusion");
             AddCond(bytege(0x226, 1), "Eden", "Dispel Eden illusion");
+            AddCond(bytege(0x236, 1), "Crush the hand");
             AddCond(() => (getbyte(0x23b) >= 1 && getbyte(0x23c) >= 1 && getbyte(0x23d) >= 1), "Read cog tablets", "Read cog riddles");
+            AddCond(bytege(0x23b, 2), "Ba");
+            AddCond(bytege(0x23c, 3), "Lizard");
+            AddCond(bytege(0x23d, 2), "Child riddle", "Child");
+            AddCond(bytege(0x23a, 1), "Cog 1", "Stray fairy");
+            AddCond(bytege(0x23a, 4), "Cog 4", "Use cog");
+            AddCond(bytege(0x239, 1), "Close sacrificial pit");
+            AddCond(bytege(0x237, 1), "Chi You");
             EndCat();
 
             StartCat("Graveyard of the Giants");
@@ -342,10 +373,46 @@ namespace LiveSplit.LaMulanaRemake
             AddCond(bytege(0x29d, 1), "Eden: trap");
             AddCond(bytege(0x29e, 1), "Eden: face");
             AddCond(bytege(0x32a, 1), "Anubis visit"); // technically this is a Mulbruk conversation flag
+            AddCond(bytege(0x07a, 1), "Alsedana");
             EndCat();
 
             StartCat("Tower of the Goddess");
             AddCond(bytege(0x271, 1), "Lit the tower of the goddess", "Lights on");
+            AddCond(bytege(0x275, 2), "Eye of Truth 2", "Eye of Truth");
+            AddCond(bytege(0x41c, 1), "Unlock hatches");
+            AddCond(bytege(0x27b, 1), "Flail 1", "Start Flail Whip puzzle");
+            AddCond(bytege(0x27f, 1), "Vimana (left)");
+            AddCond(bytege(0x280, 1), "Vimana (right)");
+            EndCat();
+
+            StartCat("Tower of Ruin");
+            AddCond(bytege(0x28e, 1), "Thunderbird");
+            AddCond(bytege(0x28f, 1), "Uncover medicine statue");
+            AddCond(bytege(0x298, 1), "Djed pillar 1");
+            AddCond(bytege(0x298, 3), "Djed pillar 2");
+            AddCond(bytege(0x298, 3), "Nuwa");
+            AddCond(bytege(0x529, 1), "Ruin La-Mulanese", "La-Mulanese tablet");
+            EndCat();
+
+            StartCat("Chamber of Birth");
+            AddCond(bytege(0x531, 1), "Birth La-Mulanese", "La-Mulanese tablet");
+            AddCond(bytege(0x2a6, 1), "Dance of life");
+            AddCond(bytege(0x2a6, 2), "Skanda");
+            EndCat();
+
+            StartCat("Dimensional Corridor");
+            AddCond(bytege(0x10d, 1), "Fobos");
+            AddCond(() => (getbyte(0x545) != 0 && getbyte(0x546) != 0), "Learn BIRTH + DEATH");
+            EndCat();
+
+            StartCat("True Shrine of the Mother");
+            AddCond(bytege(0x2e0, 1), "Mom ankh 1", "Ankh dais");
+            AddCond(bytege(0x2d5, 2), "Asked Fairies for help");
+            EndCat();
+
+            StartCat("Hell Temple");
+            AddCond(bytege(0x3bb, 1), "Unlock Hell Temple");
+            AddCond(bytege(0x106, 2), "Beat Hell Temple");
             EndCat();
             EndCat();
 
@@ -394,6 +461,9 @@ namespace LiveSplit.LaMulanaRemake
             AddCond(() => (0x200 == (0x200 & game.Var<uint>("flags-2"))), "Luck fairy");
             AddCond(() => (0x10 == (0x10 & game.Var<uint>("flags-2"))), "Fairies on cooldown");
             AddCond(() => (0 == (0x10 & game.Var<uint>("flags-2"))), "Fairies off cooldown");
+            AddCond(bytege(0x2e5, 1), "20% La-Mulanese");
+            AddCond(bytege(0x2e5, 2), "60% La-Mulanese");
+            AddCond(bytege(0x2e5, 3), "100% La-Mulanese");
             EndCat();
 
             foreach (var key in intsplits.Keys)
