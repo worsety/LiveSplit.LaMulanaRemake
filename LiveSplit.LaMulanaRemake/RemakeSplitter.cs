@@ -249,6 +249,22 @@ namespace LiveSplit.LaMulanaRemake
             EndCat();
 
             StartCat("Puzzles");
+            Action<int, string> AddMantra = (idx, name) =>
+            {
+                AddCond(bytege(idx, 3), String.Format("Learnt {0}", name));
+                AddCond(bytege(idx, 4), String.Format("Recited {0}", name));
+            };
+            StartCat("Mantras");
+            AddMantra(0x12b, "MARDUK");
+            AddMantra(0x12a, "SABBAT");
+            AddMantra(0x129, "MU");
+            AddMantra(0x128, "VIY");
+            AddMantra(0x127, "BAHRUN");
+            AddMantra(0x126, "WEDJET");
+            AddMantra(0x125, "ABUTO");
+            AddMantra(0x124, "LAMULANA");
+            EndCat();
+
             StartCat("Surface");
             AddCond(bytege(0x07b, 12), "Score=12", "Talk to Xelpud twice");
             AddCond(bytege(0x145, 1), "Ruins open", "Ruins open");
