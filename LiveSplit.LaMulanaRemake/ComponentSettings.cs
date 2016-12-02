@@ -85,7 +85,7 @@ namespace LiveSplit.LaMulanaRemake
                     splitnames.Add(splitname);
             }
 
-            this.SuspendLayout();
+            SuspendLayout();
 
             splitCondMenu.MenuItems.Clear();
             AddSplitConds(splitCondMenu.MenuItems, remakesplitter.splitcats);
@@ -99,6 +99,7 @@ namespace LiveSplit.LaMulanaRemake
             };
             foreach (var y in listsofsplits)
             {
+                y.panel.AutoScroll = false; // If I don't do this, the layout never shrinks.  I don't even.
                 y.panel.Controls.Clear();
                 y.panel.RowStyles.Clear();
                 foreach (string split in y.splits)
@@ -123,9 +124,10 @@ namespace LiveSplit.LaMulanaRemake
                     y.panel.RowStyles.Add(new RowStyle(SizeType.AutoSize));
                 }
                 y.panel.RowCount = y.panel.RowStyles.Count;
+                y.panel.AutoScroll = true;
             }
 
-            this.ResumeLayout();
+            ResumeLayout();
         }
     }
 }
