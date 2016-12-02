@@ -311,6 +311,7 @@ namespace LiveSplit.LaMulanaRemake
             AddCond(bytege(0x194, 1), "Left hatch");
             AddCond(bytege(0x195, 1), "Right hatch");
             AddCond(bytege(0x078, 1), "Giltoriyo");
+            AddCond(bytege(0x387, 1), "Fishy merchandise");
             EndCat();
 
             StartCat("Inferno Cavern");
@@ -325,6 +326,7 @@ namespace LiveSplit.LaMulanaRemake
             AddCond(bytege(0x1c6, 1), "Centimani");
             AddCond(bytege(0x1cb, 1), "Ox-head and Horse-face");
             AddCond(bytege(0x1c7, 1), "Lit mantra.exe mural");
+            AddCond(bytege(0x38c, 1), "Gate of Time");
             EndCat();
 
             StartCat("Twin Labyrinths");
@@ -378,6 +380,7 @@ namespace LiveSplit.LaMulanaRemake
             AddCond(bytege(0x27b, 1), "Flail 1", "Start Flail Whip puzzle");
             AddCond(bytege(0x27f, 1), "Vimana (left)");
             AddCond(bytege(0x280, 1), "Vimana (right)");
+            AddCond(bytege(0x38e, 1), "Reveal Spaulder"); // maybe ACE unlocks this while going somewhere but doesn't pick it up until mother
             EndCat();
 
             StartCat("Tower of Ruin");
