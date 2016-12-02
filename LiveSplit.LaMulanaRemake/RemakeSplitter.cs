@@ -342,6 +342,11 @@ namespace LiveSplit.LaMulanaRemake
             StartCat("Endless Corridor");
             AddCond(bytege(0x1f5, 1), "Visit fairy queen");
             AddCond(bytenz(0x118), "Fairies"); // this is the actual fairy points condition, 1f5 is the fairy queen's dialogue for the first two visits
+            AddCond(bytege(0x1f8, 2), "1st corridor");
+            AddCond(bytege(0x1f9, 2), "2nd corridor");
+            AddCond(bytege(0x1fa, 2), "3rd corridor");
+            AddCond(bytege(0x1fb, 2), "4th corridor");
+            AddCond(bytege(0x1fc, 1), "5th corridor");
             EndCat();
 
             StartCat("Gate of Illusion");
@@ -401,6 +406,21 @@ namespace LiveSplit.LaMulanaRemake
             StartCat("Dimensional Corridor");
             AddCond(bytege(0x10d, 1), "Fobos");
             AddCond(() => (getbyte(0x545) != 0 && getbyte(0x546) != 0), "Learn BIRTH + DEATH");
+            AddCond(bytege(0x2c3, 1), "Girtablilu");
+            AddCond(bytege(0x2c7, 1), "Ugallu");
+            AddCond(bytege(0x2c9, 1), "Lahamu");
+            AddCond(bytege(0x2c8, 1), "Ushum");
+            AddCond(bytege(0x2c5, 1), "Kuusarikku");
+            AddCond(bytege(0x2c4, 1), "Kulullu");
+            AddCond(bytege(0x2c6, 1), "Urmahlullu");
+            AddCond(bytege(0x2ca, 1), "Mushnahhu");
+            AddCond(bytege(0x2cc, 1), "Ushumgallu");
+            AddCond(bytege(0x2cb, 1), "Umu-dabrutu");
+            AddCond(bytege(0x2d4, 1), "Mushussu");
+            AddCond(bytege(0x2c0, 1), "Mushussu puzzle 1");
+            AddCond(bytege(0x2c0, 2), "Mushussu puzzle 2");
+            AddCond(bytege(0x2c0, 3), "Mushussu puzzle 3");
+            AddCond(bytege(0x2c0, 4), "Mushussu puzzle 4");
             EndCat();
 
             StartCat("Shrine of the Mother");
