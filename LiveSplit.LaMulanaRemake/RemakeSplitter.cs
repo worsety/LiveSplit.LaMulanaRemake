@@ -65,7 +65,6 @@ namespace LiveSplit.LaMulanaRemake
             AddGrail(0x069, "Chamber of Extinction");
             AddGrail(0x06a, "Twin Labyrinths (front)");
             AddGrail(0x06b, "Endless Corridor");
-            AddGrail(0x06c, "Shrine of the Mother");
             AddGrail(0x06d, "Gate of Illusion");
             AddGrail(0x06e, "Graveyard of the Giants");
             AddGrail(0x06f, "Temple of the Moon");
@@ -74,6 +73,7 @@ namespace LiveSplit.LaMulanaRemake
             AddGrail(0x072, "Chamber of Birth");
             AddGrail(0x073, "Twin Labyrinths (back)");
             AddGrail(0x074, "Dimensional Corridor");
+            AddGrail(0x06c, "Shrine of the Mother");
             AddGrail(0x075, "True Shrine of the Mother");
             EndCat();
 
@@ -98,9 +98,9 @@ namespace LiveSplit.LaMulanaRemake
             AddOrb(0x0cb, "Spring in the Sky");
             AddOrb(0x0cc, "Chamber of Extinction");
             AddOrb(0x0cd, "Twin Labyrinths");
-            AddOrb(0x0ce, "Shrine of the Mother");
             AddOrb(0x0cf, "Tower of Ruin");
             AddOrb(0x0d0, "Dimensional Corridor");
+            AddOrb(0x0ce, "Shrine of the Mother");
             EndCat();
 
             Action<int, string> AddMap = (idx, field) => AddCond(byteeq(idx, 2), "Map: " + field, field);
@@ -114,7 +114,6 @@ namespace LiveSplit.LaMulanaRemake
             AddMap(0xd7, "Chamber of Extinction");
             AddMap(0xd8, "Twin Labyrinths");
             AddMap(0xd9, "Endless Corridor");
-            AddMap(0xda, "Shrine of the Mother");
             AddMap(0xdb, "Gate of Illusion");
             AddMap(0xdc, "Graveyard of the Giants");
             AddMap(0xdd, "Temple of the Moon");
@@ -122,6 +121,7 @@ namespace LiveSplit.LaMulanaRemake
             AddMap(0xdf, "Tower of Ruin");
             AddMap(0xe0, "Chamber of Birth");
             AddMap(0xe1, "Dimensional Corridor");
+            AddMap(0xda, "Shrine of the Mother");
             EndCat();
 
             Action<int, string> AddItemB = (idx, name) => AddCond(byteeq(idx, 2), name);
@@ -342,11 +342,6 @@ namespace LiveSplit.LaMulanaRemake
             AddCond(bytenz(0x118), "Fairies"); // this is the actual fairy points condition, 1f5 is the fairy queen's dialogue for the first two visits
             EndCat();
 
-            StartCat("Shrine of the Mother");
-            AddCond(bytege(0x218, 1), "Placed Dragon Bone");
-            AddCond(bytege(0x4e2, 1), "Shrine La-Mulanese", "La-Mulanese tablet");
-            EndCat();
-
             StartCat("Gate of Illusion");
             AddCond(bytege(0x226, 1), "Eden", "Dispel Eden illusion");
             AddCond(bytege(0x236, 1), "Crush the hand");
@@ -405,6 +400,11 @@ namespace LiveSplit.LaMulanaRemake
             AddCond(() => (getbyte(0x545) != 0 && getbyte(0x546) != 0), "Learn BIRTH + DEATH");
             EndCat();
 
+            StartCat("Shrine of the Mother");
+            AddCond(bytege(0x218, 1), "Placed Dragon Bone");
+            AddCond(bytege(0x4e2, 1), "Shrine La-Mulanese", "La-Mulanese tablet");
+            EndCat();
+
             StartCat("True Shrine of the Mother");
             AddCond(bytege(0x2e0, 1), "Mom ankh 1", "Ankh dais");
             AddCond(bytege(0x2d5, 2), "Asked Fairies for help");
@@ -432,7 +432,6 @@ namespace LiveSplit.LaMulanaRemake
             AddCoin(0x401, "Chamber of Extinction");
             AddCoin(0x1ec, "Twin Labyrinths B-4");
             AddCoin(0x1ee, "Twin Labyrinths H-3");
-            AddCoin(0x216, "Shrine of the Mother");
             AddCoin(0x22c, "Gate of Illusion F-6");
             AddCoin(0x233, "Gate of Illusion A-4");
             AddCoin(0x242, "Graveyard of the Giants");
@@ -444,7 +443,20 @@ namespace LiveSplit.LaMulanaRemake
             AddCoin(0x2b1, "Chamber of Birth H-4");
             AddCoin(0x2b3, "Chamber of Birth E-6");
             AddCoin(0x2bf, "Dimensional Corridor");
+            AddCoin(0x216, "Shrine of the Mother");
             AddCoin(0x3fc, "Escape");
+            EndCat();
+
+            StartCat("Fairy points");
+            AddCond(bytenz(0x392), "Fairy point: Spring in the Sky", "Spring in the Sky");
+            AddCond(bytenz(0x393), "Fairy point: Chamber of Extinction", "Chamber of Extinction");
+            AddCond(bytenz(0x398), "Fairy point: Twin Labyrinths", "Twin Labyrinths");
+            AddCond(bytenz(0x395), "Fairy point: Endless Corridor", "Endless Corridor");
+            AddCond(bytenz(0x399), "Fairy point: Gate of Illusion", "Gate of Illusion");
+            AddCond(bytenz(0x396), "Fairy point: Temple of Moonlight", "Temple of Moonlight");
+            AddCond(bytenz(0x397), "Fairy point: Tower of the Goddess", "Tower of the Goddess");
+            AddCond(bytenz(0x394), "Fairy point: Shrine of the Mother", "Shrine of the Mother");
+            AddCond(bytenz(0x39a), "Fairy point: True Shrine of the Mother", "True Shrine of the Mother");
             EndCat();
 
             Action<int, int> AddEmail = (idx, num) => AddCond(bytenz(idx), String.Format("Xelpud's e-mail #{0:D2}", num), String.Format("#{0:D2}", num));

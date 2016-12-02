@@ -482,10 +482,10 @@
   <item id="byte-237" value="ill-chi-you" comments="1 then 2, unsure about timing" />
   <item id="byte-238" value="ill-puz-blocks" comments="1=break 2=dais" />
   <item id="byte-239" value="ill-puz-closepit" comments="1" />
-  <item id="byte-23a" value="ill-puz-cog" comments="1=talked to fairy 2=barriers down 3=chest ajar" />
+  <item id="byte-23a" value="ill-puz-cog" comments="1=talked to fairy 2=barriers down 3=chest ajar 4=mudmen spawn" />
   <item id="byte-23b" value="ill-cog-bird" comments="1=read 2=killed ba 3=dais" />
   <item id="byte-23c" value="ill-cog-lizard" comments="1=read 2=light 3=solved 4=dais" />
-  <item id="byte-23d" value="ill-cog-child" comments="1=read 2=solved 3=dais 4=mudmen spawn" />
+  <item id="byte-23d" value="ill-cog-child" comments="1=read 2=solved 3=dais" />
   <item id="byte-23f" value="gra-platform-ill" comments="1,2,3" />
   <item id="byte-240" value="gra-ladder-ill" comments="2" />
   <item id="byte-241" value="gra-wall-coin" comments="2" />
