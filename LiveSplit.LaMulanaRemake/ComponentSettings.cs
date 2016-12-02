@@ -40,9 +40,16 @@ namespace LiveSplit.LaMulanaRemake
             Button button = (Button)menuitem.GetContextMenu().SourceControl;
             button.Text = GetMenuPath((MenuItem)sender);
             if (menuitem.Tag != null)
+            {
                 component.remake.splits[(string)button.Tag] = (string)menuitem.Tag;
+                button.BackColor = default(System.Drawing.Color);
+                button.UseVisualStyleBackColor = true;
+            }
             else
+            {
                 component.remake.splits.Remove((string)button.Tag);
+                button.BackColor = System.Drawing.Color.PaleVioletRed;
+            }
         }
 
         void AddSplitConds(Menu.MenuItemCollection menuitems, OrderedDictionary conds)
@@ -82,15 +89,24 @@ namespace LiveSplit.LaMulanaRemake
             AddSplitConds(splitCondMenu.MenuItems, remakesplitter.splitcats);
 
             var listsofsplits = new[] {
-                new { panel = unkSplitsLayout, splits = splitnames.Where((x) => !remakesplitter.splits.ContainsKey(x))},
-                new { panel = knownSplitsLayout, splits = splitnames.Where((x) => remakesplitter.splits.ContainsKey(x))},
-                new { panel = otherSplitsLayout, splits = remakesplitter.splits.Keys.Where((x) => !splitnames.Contains(x))}
+                new { panel = runMappingLayout, splits = splitnames.AsEnumerable() },
+                new { panel = otherMappingLayout, splits = remakesplitter.splits.Keys.Except(splitnames) }
             };
             foreach (var y in listsofsplits)
             {
                 y.panel.AutoScroll = false; // If I don't do this, the layout never shrinks.  I don't even.
                 y.panel.Controls.Clear();
                 y.panel.RowStyles.Clear();
+                if (y.panel == runMappingLayout)
+                {
+                    int unmapped = splitnames.Except(remakesplitter.splits.Keys).Count();
+                    if (unmapped > 0)
+                    {
+                        y.panel.Controls.Add(new Label { Text = String.Format("Warning: {0} unmapped splits", unmapped), Dock = DockStyle.Fill, TextAlign = System.Drawing.ContentAlignment.MiddleCenter });
+                        y.panel.SetColumnSpan(y.panel.Controls[0], 2);
+                        y.panel.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+                    }
+                }
                 foreach (string split in y.splits)
                 {
                     TextBox splitbox = new TextBox { Text = split, Dock = DockStyle.Fill, ReadOnly = true };
@@ -102,6 +118,8 @@ namespace LiveSplit.LaMulanaRemake
                         Dock = DockStyle.Fill,
                         TextAlign = System.Drawing.ContentAlignment.MiddleLeft,
                     };
+                    if (y.panel == runMappingLayout && !remakesplitter.splits.ContainsKey(split))
+                        selector.BackColor = System.Drawing.Color.PaleVioletRed;
                     selector.Click += (object sender, EventArgs evargs) => splitCondMenu.Show((Control)sender, new System.Drawing.Point(0, 0));
                     y.panel.Controls.Add(splitbox);
                     y.panel.Controls.Add(selector);
