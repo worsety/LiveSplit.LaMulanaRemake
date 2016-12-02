@@ -27,18 +27,6 @@ namespace LiveSplit.LaMulanaRemake
             InitializeComponent();
         }
 
-        struct MappingControlPair { public TextBox splitname; public Button mapto; };
-        List<MappingControlPair> mapping_controls = new List<MappingControlPair>();
-
-        public IDictionary<string, string> GetSplitMap(SplitMatcher remakesplitter)
-        {
-            Dictionary<string, string> ret = new Dictionary<string, string>();
-            foreach (var a in mapping_controls)
-                if (a.mapto.Tag != null && remakesplitter.intsplits.ContainsKey((string)a.mapto.Tag))
-                    ret.Add(a.splitname.Text, (string)a.mapto.Tag);
-            return ret;
-        }
-
         string GetMenuPath(MenuItem m)
         {
             if (m.Parent is MenuItem)
@@ -51,7 +39,10 @@ namespace LiveSplit.LaMulanaRemake
             MenuItem menuitem = (MenuItem)sender;
             Button button = (Button)menuitem.GetContextMenu().SourceControl;
             button.Text = GetMenuPath((MenuItem)sender);
-            button.Tag = menuitem.Tag;
+            if (menuitem.Tag != null)
+                component.remake.splits[(string)button.Tag] = (string)menuitem.Tag;
+            else
+                component.remake.splits.Remove((string)button.Tag);
         }
 
         void AddSplitConds(Menu.MenuItemCollection menuitems, OrderedDictionary conds)
@@ -90,8 +81,6 @@ namespace LiveSplit.LaMulanaRemake
             splitCondMenu.MenuItems.Clear();
             AddSplitConds(splitCondMenu.MenuItems, remakesplitter.splitcats);
 
-            mapping_controls.Clear();
-
             var listsofsplits = new[] {
                 new { panel = unkSplitsLayout, splits = splitnames.Where((x) => !remakesplitter.splits.ContainsKey(x))},
                 new { panel = knownSplitsLayout, splits = splitnames.Where((x) => remakesplitter.splits.ContainsKey(x))},
@@ -104,23 +93,18 @@ namespace LiveSplit.LaMulanaRemake
                 y.panel.RowStyles.Clear();
                 foreach (string split in y.splits)
                 {
-                    TextBox splitbox = new TextBox { Text = split, Dock = DockStyle.Fill };
+                    TextBox splitbox = new TextBox { Text = split, Dock = DockStyle.Fill, ReadOnly = true };
                     Button selector;
-                    if (remakesplitter.splits.ContainsKey(split))
-                        selector = new Button
-                        {
-                            Text = remakesplitter.displaynames[remakesplitter.splits[split]],
-                            Tag = remakesplitter.splits[split],
-                            Dock = DockStyle.Fill,
-                        };
-                    else
-                        selector = new Button { Text = "Unmapped", Tag = null };
-                    selector.Dock = DockStyle.Fill;
-                    selector.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+                    selector = new Button
+                    {
+                        Text = remakesplitter.splits.ContainsKey(split) ? remakesplitter.displaynames[remakesplitter.splits[split]] : "Unmapped",
+                        Tag = split,
+                        Dock = DockStyle.Fill,
+                        TextAlign = System.Drawing.ContentAlignment.MiddleLeft,
+                    };
                     selector.Click += (object sender, EventArgs evargs) => splitCondMenu.Show((Control)sender, new System.Drawing.Point(0, 0));
                     y.panel.Controls.Add(splitbox);
                     y.panel.Controls.Add(selector);
-                    mapping_controls.Add(new MappingControlPair { splitname = splitbox, mapto = selector });
                     y.panel.RowStyles.Add(new RowStyle(SizeType.AutoSize));
                 }
                 y.panel.RowCount = y.panel.RowStyles.Count;

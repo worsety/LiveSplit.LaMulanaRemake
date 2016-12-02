@@ -90,8 +90,6 @@ namespace LiveSplit.LaMulanaRemake
 
         public XmlNode GetSettings(XmlDocument document)
         {
-            remake.splits = settings_control.GetSplitMap(remake);
-
             XmlElement settings = document.CreateElement("Settings");
             XmlElement remakesettings = document.CreateElement("Remake");
             XmlElement remakemapping = document.CreateElement("Mapping");
