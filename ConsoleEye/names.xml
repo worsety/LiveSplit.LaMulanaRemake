@@ -239,7 +239,7 @@
   <item id="byte-131" value="gui-puz-shuriken" comments="4" />
   <item id="byte-132" value="gui-puz-coin3" comments="1" />
   <item id="byte-133" value="gui-puz-ankh" comments="1=block 2=left dais 3=right dais revealed 5=solved 6=killed amphisbaena" />
-  <item id="byte-134" value="gui-elevator" comments="1=mouth 2,3=seen" />
+  <item id="byte-134" value="gui-elevator" comments="1,2=mouth 3,4=seen" />
   <item id="byte-135" value="gui-puz-grail" comments="1" />
   <item id="byte-136" value="gui-puz-jewel" comments="1=floodwindetc 2=dais 3=dais" />
   <item id="byte-137" value="gui-puz-pepper" comments="1,2" />
@@ -285,7 +285,7 @@
   <item id="byte-162" value="maus-ghostlord" comments="1=kill 2=weapon block gone" />
   <item id="byte-163" value="maus-puz-jewel" comments="1" />
   <item id="byte-164" value="maus-puz-ankh" comments="1=solved, 2=sakit dead" />
-  <item id="byte-165" value="maus-puz-jewel" comments="1" />
+  <item id="byte-165" value="maus-puz-orb" comments="1" />
   <item id="byte-166" value="maus-coin" />
   <item id="byte-167" value="maus-trap-jewel" comments="1,2=activated, 4=deactivated" />
   <item id="byte-168" value="maus-sleep-start" comments="1" />
@@ -395,6 +395,7 @@
   <item id="byte-1d5" value="maus-map-redir" comments="1->chest" />
   <item id="byte-1d7" value="twin-poison" comments="1=counting down, 2=fatal in the twins race rooms; interestingly this isn't cleared if you exit abnormally" />
   <item id="byte-1d8" value="twin-peryton" comments="1=killed 2=left" />
+  <item id="byte-1da" value="twin-floor-katana" comments="1" />
   <item id="byte-1db" value="twin-grail-lift" comments="1=solved 2=seen" />
   <item id="byte-1dc" value="twin-puz-release" comments="1=first dais 2=second dais" />
   <item id="byte-1dd" value="twin-wall-map" comments="1" />
@@ -414,9 +415,8 @@
   <item id="byte-1eb" value="twin-wall-coin1" comments="1,2" />
   <item id="byte-1ec" value="twin-coin1" comments="1" />
   <item id="byte-1ed" value="twin-wall-coin2" comments="1,2" />
-  <item id="byte-1ee" value="twin-coin1" comments="1" />
+  <item id="byte-1ee" value="twin-coin2" comments="1" />
   <item id="byte-1ef" value="twin-wall-impossible" comments="1" />
-  <item id="byte-1da" value="twin-floor-katana" comments="1" />
   <item id="byte-1f0" value="twin-big-brother" comments="1=unlocked 2=confirmed" />
   <item id="byte-1f1" value="twin-ladder-shrine" comments="1,2" />
   <item id="byte-1f2" value="twin-ladder-dimen" comments="1,2" />
@@ -460,28 +460,28 @@
   <item id="byte-221" value="shr-puz-bounce" comments="1" />
   <item id="byte-222" value="ill-puz-map" comments="bits = open chests you walked by, 0x1f = complete (0x10 for completion I think since there are just 4?)" />
   <item id="byte-223" value="ill-fallen-item" comments="1" />
-  <item id="byte-228" value="i-i-&lt;3-fraud" comments="1=pepper 2=anchor" />
-  <item id="byte-229" value="ill-ladder-doll" comments="1,2" />
-  <item id="byte-22a" value="ill-puz-small" comments="2=doll, 3=small, 4=read, 5=block disappears" />
-  <item id="byte-22d" value="ill-map-open?" comments="1" />
   <item id="byte-224" value="ill-eden-maiden" comments=";_;" />
   <item id="byte-225" value="ill-wall-cog" comments="1" />
   <item id="byte-226" value="ill-dispel-eden" comments="1" />
   <item id="byte-227" value="ill-puz-endofbot" comments="1=skeledais 2=used to be logic puzzle" />
+  <item id="byte-228" value="i-i-&lt;3-fraud" comments="1=pepper 2=anchor" />
+  <item id="byte-229" value="ill-ladder-doll" comments="1,2" />
+  <item id="byte-22a" value="ill-puz-small" comments="2=doll, 3=small, 4=read, 5=block disappears" />
+  <item id="byte-22b" value="ill-wall-coin" comments="2" />
+  <item id="byte-22c" value="ill-coin" comments="1" />
+  <item id="byte-22d" value="ill-map-open?" comments="1" />
   <item id="byte-22e" value="ill-floor-fairy" comments="1" />
+  <item id="byte-22f" value="ill-puz-ladder" comments="1,2" />
   <item id="byte-230" value="ill-ladder-closepit" comments="1,2" />
   <item id="byte-231" value="ill-puz-fairy" comments="1=wall 2=dais" />
   <item id="byte-232" value="ill-wall-coin^Wbomb" comments="1,2" />
   <item id="byte-233" value="ill-coin^Wbomb" comments="1" />
   <item id="byte-234" value="ill-wall-abovefairy" comments="1" />
-  <item id="byte-239" value="ill-puz-closepit" comments="1" />
-  <item id="byte-238" value="ill-puz-blocks" comments="1=break 2=dais" />
-  <item id="byte-22b" value="ill-wall-coin" comments="2" />
-  <item id="byte-22c" value="ill-coin" comments="1" />
-  <item id="byte-22f" value="ill-puz-ladder" comments="1,2" />
   <item id="byte-235" value="ill-puz-spikes" comments="1" />
   <item id="byte-236" value="ill-puz-hand" comments="1" />
   <item id="byte-237" value="ill-chi-you" comments="1 then 2, unsure about timing" />
+  <item id="byte-238" value="ill-puz-blocks" comments="1=break 2=dais" />
+  <item id="byte-239" value="ill-puz-closepit" comments="1" />
   <item id="byte-23a" value="ill-puz-cog" comments="1=talked to fairy 2=barriers down 3=chest ajar" />
   <item id="byte-23b" value="ill-cog-bird" comments="1=read 2=killed ba 3=dais" />
   <item id="byte-23c" value="ill-cog-lizard" comments="1=read 2=light 3=solved 4=dais" />
@@ -524,6 +524,7 @@
   <item id="byte-263" value="moon-puz-gravecorridor" comments="bit 0=right bottom wall, bit 1 = right middle wall, bit 2=right top wall, bit3=top wall (left dais), bit 4=top dais, bit 5=last breakable wall, bit 6 = bottom left dais (bottom wall), bit 7 = bottom dais (teleporter wall)" />
   <item id="byte-265" value="ruin-ladder-alsedana" comments="1,2" />
   <item id="byte-266" value="moon-puz-grindpyr" comments="1=hit block 2=cut off tip, 3=cut off tip but softlocked because hatch closed" />
+  <item id="byte-267" value="moon-cover-moon" comments="1,2" />
   <item id="byte-268" value="moon-wall-scriproom" comments="1" />
   <item id="byte-269" value="moon-seal-wall" comments="1=seal, 2,3=bats wall" />
   <item id="byte-26a" value="moon-puz-floatplat" comments="1,2" />

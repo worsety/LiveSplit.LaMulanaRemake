@@ -25,296 +25,360 @@ namespace LiveSplit.LaMulanaRemake
         // Minibosses become 1 when defeated.  Some become 2 when you re-enter their room e.g. buer?
         // Guardians become 1 when their ankh (visibly) spawns, 2 when the fight starts, 3 when the fight ends
 
-        void AddItem(string name, Func<bool> pred)
-        {
-            intsplits.Add(name, () => pred() && !inshop());
-            items.Add(name);
-        }
-
-        void AddItemB(string name, int byteidx, int value = 2)
-        {
-            AddItem(name, () => (getbyte(byteidx) == value && !inshop()));
-        }
-
-        void AddItemW(string name, int wordidx, int value = 1)
-        {
-            AddItem(name, () => (getword(wordidx) == value && !inshop()));
-        }
-
-        void AddEvent(string name, Func<bool> pred)
-        {
-            intsplits.Add(name, pred);
-            events.Add(name);
-        }
-
-        void AddEvent(string name, int byteidx, int thres = 1)
-        {
-            AddEvent(name, () => (getbyte(byteidx) >= thres));
-        }
-
-        void AddGuardian(string name, int byteidx, int value = 3)
-        {
-            intsplits.Add(name, () => (getbyte(byteidx) >= value));
-            guardians.Add(name);
-        }
-
         public RemakeSplitter() : base()
         {
             game = new EyeOfTruth.LaMulanaRemake();
-            items = new List<string>();
-            events = new List<string>();
-            guardians = new List<string>();
 
-            AddGuardian("Amphisbaena start", 0x0f6, 2);
-            AddGuardian("Amphisbaena", 0x0f6);
-            AddGuardian("Sakit start", 0x0f7, 2);
-            AddGuardian("Sakit", 0x0f7);
-            AddGuardian("Ellmac start", 0x0f8, 2);
-            AddGuardian("Ellmac", 0x0f8);
-            AddGuardian("Bahamut start", 0x0f9, 2);
-            AddGuardian("Bahamut", 0x0f9);
-            AddGuardian("Viy start", 0x0fa, 2);
-            AddGuardian("Viy", 0x0fa);
-            AddGuardian("Baphomet start", 0x0fc, 2);
-            AddGuardian("Baphomet", 0x0fc);
-            AddGuardian("Palenque start", 0x0fb, 2);
-            AddGuardian("Palenque", 0x0fb);
-            AddGuardian("Tiamat start", 0x0fd, 2);
-            AddGuardian("Tiamat", 0x0fd);
-            AddGuardian("Mother start", 0x0fe, 2);
-            AddGuardian("Mother", 0x0fe);
-            AddEvent("Escape", () => (0x8020001 == (0x8020001 & game.Var<uint>("flags-4"))));
+            Func<int, Func<bool>> bytenz = (idx) => () => (getbyte(idx) != 0);
+            Func<int, byte, Func<bool>> byteeq = (idx, val) => () => (getbyte(idx) == val);
+            Func<int, byte, Func<bool>> bytege = (idx, val) => () => (getbyte(idx) >= val);
+            Func<int, Func<bool>> wordnz = (idx) => () => (getword(idx) != 0);
+            Func<int, ushort, Func<bool>> wordeq = (idx, val) => () => (getword(idx) == val);
+            Func<int, ushort, Func<bool>> wordge = (idx, val) => () => (getword(idx) >= val);
 
-            AddEvent("Grail point: Gate of Guidance", 0x064);
-            AddEvent("Grail point: Mausoleum of the Giants", 0x065);
-            AddEvent("Grail point: Temple of the Sun", 0x066);
-            AddEvent("Grail point: Spring in the Sky", 0x067);
-            AddEvent("Grail point: Inferno Cavern", 0x068);
-            AddEvent("Grail point: Chamber of Extinction", 0x069);
-            AddEvent("Grail point: Twin Labyrinths (front)", 0x06a);
-            AddEvent("Grail point: Endless Corridor", 0x06b);
-            AddEvent("Grail point: Shrine of the Mother", 0x06c);
-            AddEvent("Grail point: Gate of Illusion", 0x06d);
-            AddEvent("Grail point: Graveyard of the Giants", 0x06e);
-            AddEvent("Grail point: Temple of the Moon", 0x06f);
-            AddEvent("Grail point: Tower of the Goddess", 0x070);
-            AddEvent("Grail point: Tower of Ruin", 0x071);
-            AddEvent("Grail point: Chamber of Birth", 0x072);
-            AddEvent("Grail point: Twin Labyrinths (back)", 0x073);
-            AddEvent("Grail point: Dimensional Corridor", 0x074);
-            AddEvent("Grail point: True Shrine of the Mother", 0x075);
+            AddCond(() => (0x8020001 == (0x8020001 & game.Var<uint>("flags-4"))), "Escape");
 
-            AddItemB("Ankh jewel: Gate of Guidance", 0x08e);
-            AddItemB("Ankh jewel: Mausoleum of the Giants", 0x08f);
-            AddItemB("Ankh jewel: Temple of the Sun", 0x090);
-            AddItemB("Ankh jewel: Spring in the Sky", 0x091);
-            AddItemB("Ankh jewel: Tower of Ruin", 0x092);
-            AddItemB("Ankh jewel: Chamber of Birth", 0x093);
-            AddItemB("Ankh jewel: Twin Labyrinths", 0x094);
-            AddItemB("Ankh jewel: Dimensional Corridor", 0x095);
+            Action<int, string> AddGuardian = (idx, guardian) =>
+            {
+                AddCond(bytege(idx, 2), guardian + " start");
+                AddCond(bytege(idx, 3), guardian);
+            };
+            StartCat("Guardians");
+            AddGuardian(0x0f6, "Amphisbaena");
+            AddGuardian(0x0f7, "Sakit");
+            AddGuardian(0x0f8, "Ellmac");
+            AddGuardian(0x0f9, "Bahamut");
+            AddGuardian(0x0fa, "Viy");
+            AddGuardian(0x0fb, "Baphomet");
+            AddGuardian(0x0fc, "Palenque");
+            AddGuardian(0x0fd, "Tiamat");
+            AddGuardian(0x0fe, "Mother");
+            EndCat();
 
-            AddItemB("Sacred orb: Gate of Guidance", 0x0c7);
-            AddItemB("Sacred orb: Surface", 0x0c8);
-            AddItemB("Sacred orb: Mausoleum of the Giants", 0x0c9);
-            AddItemB("Sacred orb: Temple of the Sun", 0x0ca);
-            AddItemB("Sacred orb: Spring in the Sky", 0x0cb);
-            AddItemB("Sacred orb: Chamber of Extinction", 0x0cc);
-            AddItemB("Sacred orb: Twin Labyrinths", 0x0cd);
-            AddItemB("Sacred orb: Shrine of the Mother", 0x0ce);
-            AddItemB("Sacred orb: Tower of Ruin", 0x0cf);
-            AddItemB("Sacred orb: Dimensional Corridor", 0x0d0);
+            Action<int, string> AddGrail = (idx, field) => AddCond(byteeq(idx, 1), "Grail point: " + field, field);
+            StartCat("Grail points");
+            AddGrail(0x064, "Gate of Guidance");
+            AddGrail(0x065, "Mausoleum of the Giants");
+            AddGrail(0x066, "Temple of the Sun");
+            AddGrail(0x067, "Spring in the Sky");
+            AddGrail(0x068, "Inferno Cavern");
+            AddGrail(0x069, "Chamber of Extinction");
+            AddGrail(0x06a, "Twin Labyrinths (front)");
+            AddGrail(0x06b, "Endless Corridor");
+            AddGrail(0x06c, "Shrine of the Mother");
+            AddGrail(0x06d, "Gate of Illusion");
+            AddGrail(0x06e, "Graveyard of the Giants");
+            AddGrail(0x06f, "Temple of the Moon");
+            AddGrail(0x070, "Tower of the Goddess");
+            AddGrail(0x071, "Tower of Ruin");
+            AddGrail(0x072, "Chamber of Birth");
+            AddGrail(0x073, "Twin Labyrinths (back)");
+            AddGrail(0x074, "Dimensional Corridor");
+            AddGrail(0x075, "True Shrine of the Mother");
+            EndCat();
 
-            AddItemB("Map: Surface", 0xd1);
-            AddItemB("Map: Gate of Guidance", 0xd2);
-            AddItemB("Map: Mausoleum of the Giants", 0xd3);
-            AddItemB("Map: Temple of the Sun", 0xd4);
-            AddItemB("Map: Spring in the Sky", 0xd5);
-            AddItemB("Map: Inferno Cavern", 0xd6);
-            AddItemB("Map: Chamber of Extinction", 0xd7);
-            AddItemB("Map: Twin Labyrinths", 0xd8);
-            AddItemB("Map: Endless Corridor", 0xd9);
-            AddItemB("Map: Shrine of the Mother", 0xda);
-            AddItemB("Map: Gate of Illusion", 0xdb);
-            AddItemB("Map: Graveyard of the Giants", 0xdc);
-            AddItemB("Map: Temple of the Moon", 0xdd);
-            AddItemB("Map: Tower of the Goddess", 0xde);
-            AddItemB("Map: Tower of Ruin", 0xdf);
-            AddItemB("Map: Chamber of Birth", 0xe0);
-            AddItemB("Map: Dimensional Corridor", 0xe1);
+            Action<int, string> AddJewel = (idx, field) => AddCond(byteeq(idx, 2), "Ankh jewel: " + field, field);
+            StartCat("Ankh jewels");
+            AddJewel(0x08e, "Gate of Guidance");
+            AddJewel(0x08f, "Mausoleum of the Giants");
+            AddJewel(0x090, "Temple of the Sun");
+            AddJewel(0x091, "Spring in the Sky");
+            AddJewel(0x092, "Tower of Ruin");
+            AddJewel(0x093, "Chamber of Birth");
+            AddJewel(0x094, "Twin Labyrinths");
+            AddJewel(0x095, "Dimensional Corridor");
+            EndCat();
 
-            // Weapons
-            AddItemW("Chain whip", 0x01);
-            AddItemW("Flail whip", 0x02);
-            AddItemW("Knife", 0x03);
-            AddItemW("Key sword", 0x04);
-            AddItemW("Axe", 0x05);
-            AddItemW("Katana", 0x06);
-            AddItemW("Key sword (unsealed)", 0x07);
+            Action<int, string> AddOrb = (idx, field) => AddCond(byteeq(idx, 2), "Sacred orb: " + field, field);
+            StartCat("Sacred orbs");
+            AddOrb(0x0c8, "Surface");
+            AddOrb(0x0c7, "Gate of Guidance");
+            AddOrb(0x0c9, "Mausoleum of the Giants");
+            AddOrb(0x0ca, "Temple of the Sun");
+            AddOrb(0x0cb, "Spring in the Sky");
+            AddOrb(0x0cc, "Chamber of Extinction");
+            AddOrb(0x0cd, "Twin Labyrinths");
+            AddOrb(0x0ce, "Shrine of the Mother");
+            AddOrb(0x0cf, "Tower of Ruin");
+            AddOrb(0x0d0, "Dimensional Corridor");
+            EndCat();
 
-            // Subweapons
-            AddItemW("Shurikens", 0x08);
-            AddItemW("Rolling shurikens", 0x09);
-            AddItemW("Spears", 0x0a);
-            AddItemW("Flares", 0x0b);
-            AddItemW("Bombs", 0x0c);
-            AddItemW("Chakrams", 0x0d);
-            AddItemW("Caltrops", 0x0e);
-            AddItemW("Pistol", 0x0f);
-            AddItemW("Buckler", 0x10);
+            Action<int, string> AddMap = (idx, field) => AddCond(byteeq(idx, 2), "Map: " + field, field);
+            StartCat("Maps");
+            AddMap(0xd1, "Surface");
+            AddMap(0xd2, "Gate of Guidance");
+            AddMap(0xd3, "Mausoleum of the Giants");
+            AddMap(0xd4, "Temple of the Sun");
+            AddMap(0xd5, "Spring in the Sky");
+            AddMap(0xd6, "Inferno Cavern");
+            AddMap(0xd7, "Chamber of Extinction");
+            AddMap(0xd8, "Twin Labyrinths");
+            AddMap(0xd9, "Endless Corridor");
+            AddMap(0xda, "Shrine of the Mother");
+            AddMap(0xdb, "Gate of Illusion");
+            AddMap(0xdc, "Graveyard of the Giants");
+            AddMap(0xdd, "Temple of the Moon");
+            AddMap(0xde, "Tower of the Goddess");
+            AddMap(0xdf, "Tower of Ruin");
+            AddMap(0xe0, "Chamber of Birth");
+            AddMap(0xe1, "Dimensional Corridor");
+            EndCat();
+
+            Action<int, string> AddItemB = (idx, name) => AddCond(byteeq(idx, 2), name);
+            Action<int, string> AddItemW = (idx, name) => AddCond(wordnz(idx), name);
+            StartCat("Weapons");
+            AddItemW(0x01, "Chain whip");
+            AddItemW(0x02, "Flail whip");
+            AddItemW(0x03, "Knife");
+            AddItemW(0x04, "Key sword");
+            AddItemW(0x05, "Axe");
+            AddItemW(0x06, "Katana");
+            AddItemW(0x07, "Key sword (unsealed)");
+            EndCat();
+
+            StartCat("Subweapons");
+            AddItemW(0x08, "Shurikens");
+            AddItemW(0x09, "Rolling shurikens");
+            AddItemW(0x0a, "Spears");
+            AddItemW(0x0b, "Flares");
+            AddItemW(0x0c, "Bombs");
+            AddItemW(0x0d, "Chakrams");
+            AddItemW(0x0e, "Caltrops");
+            AddItemW(0x0f, "Pistol");
+            AddItemW(0x10, "Buckler");
             // why anyone would want to split on this I don't know
             // also the value is set to 0x4b at some point, probably when getting the angel shield
             // if you hack out other shields, you actually have 75 fake silver shields and can break them one by one
-            AddItemW("Fake silver shield", 0x4b);
-            AddItemW("Silver shield", 0x11);
-            AddItemW("Angel shield", 0x12);
+            AddItemW(0x4b, "Fake silver shield");
+            AddItemW(0x11, "Silver shield");
+            AddItemW(0x12, "Angel shield");
             // 0x13 is ankh jewels, but it's not useful for splitting because it is just the ammo count
+            EndCat();
 
-            // Usable items
-            AddItemW("Hand scanner", 0x14);
-            AddItemW("Djed pillar", 0x15);
-            AddItemW("Mini doll", 0x16);
-            AddItemW("Magatama jewel", 0x17);
-            AddItemW("Cog of the soul", 0x18);
-            AddItemW("Lamp (lit)", 0x019);
-            AddItemW("Lamp of time", 0x50);
-            AddItemW("Pochette key", 0x1a);
-            AddItemW("Dragon bone", 0x1b, 0x9d); // probably a programming error because of the byte used for the item
-            AddItemW("Crystal skull", 0x1c);
-            AddItemW("Vessel", 0x1d);
-            AddItemW("Medicine of the mind", 0x4d);
-            AddItemW("Medicine of the mind (green)", 0x4e);
-            AddItemW("Medicine of the mind (red)", 0x4f);
-            AddItemW("Pepper", 0x1e);
-            AddItemW("Woman statue", 0x1f);
-            AddItemW("Maternity statue", 0x51);
-            AddItemW("Key of eternity", 0x20);
-            AddItemW("Serpent staff", 0x21);
-            AddItemW("Talisman", 0x22);
-            AddItemW("Diary", 0x48);
-            AddItemW("La-Mulana Talisman", 0x49);
+            StartCat("Usable items");
+            AddItemW(0x14, "Hand scanner");
+            AddItemW(0x15, "Djed pillar");
+            AddItemW(0x16, "Mini doll");
+            AddItemW(0x17, "Magatama jewel");
+            AddItemW(0x18, "Cog of the soul");
+            AddItemW(0x019, "Lamp (lit)");
+            AddItemW(0x50, "Lamp of time");
+            AddItemW(0x1a, "Pochette key");
+            AddItemW(0x1b, "Dragon bone"); // probably a programming error because of the byte used for the item
+            AddItemW(0x1c, "Crystal skull");
+            AddItemW(0x1d, "Vessel");
+            AddItemW(0x4d, "Medicine of the mind");
+            AddItemW(0x4e, "Medicine of the mind (green)");
+            AddItemW(0x4f, "Medicine of the mind (red)");
+            AddItemW(0x1e, "Pepper");
+            AddItemW(0x1f, "Woman statue");
+            AddItemW(0x51, "Maternity statue");
+            AddItemW(0x20, "Key of eternity");
+            AddItemW(0x21, "Serpent staff");
+            AddItemW(0x22, "Talisman");
+            AddItemW(0x48, "Diary");
+            AddItemW(0x49, "La-Mulana Talisman");
             // 0x23???
+            EndCat();
 
-            // Treasures
-            AddItemW("MSX2", 0x4c);
-            AddItemW("Waterproof case", 0x24);
-            AddItemW("Heatproof case", 0x25);
-            AddItemW("Shellhorn", 0x26);
-            AddItemW("Glove", 0x27);
-            AddItemW("Holy grail", 0x28); // before filling with all memories of the ruins
-            AddItemW("Holy grail (broken)", 0x52);
-            AddItemW("Holy grail (filled)", 0x53);
-            AddItemW("Isis' pendant", 0x29);
-            AddItemW("Crucifix", 0x2a);
-            AddItemW("Helmet", 0x2b);
-            AddItemW("Grapple claw", 0x2c);
-            AddItemW("Bronze mirror", 0x2d);
-            AddItemW("Eye of truth", 0x2e);
-            AddItemW("Ring", 0x2f);
-            AddItemW("Scalesphere", 0x30);
-            AddItemW("Gauntlet", 0x31);
-            AddItemW("Treasures", 0x47);
-            AddItemW("Anchor", 0x32);
-            AddItemW("Plane model", 0x33);
-            AddItemW("Ocarina", 0x34);
-            AddItemW("Feather", 0x35);
-            AddItemW("Book of the dead", 0x36);
-            AddItemW("Fairy clothes", 0x37);
-            AddItemW("Scriptures", 0x38);
-            AddItemW("Hermes' boots", 0x39);
-            AddItemW("Fruit of Eden", 0x3a);
-            AddItemW("Twin statue", 0x3b);
-            AddItemW("Bracelet", 0x3c);
-            AddItemW("Perfume", 0x3d);
-            AddItemW("Spaulder", 0x3e);
-            AddItemW("Dimensional key", 0x3f);
-            AddItemW("Ice cape", 0x40);
+            StartCat("Treasures");
+            AddItemW(0x4c, "MSX2");
+            AddItemW(0x24, "Waterproof case");
+            AddItemW(0x25, "Heatproof case");
+            AddItemW(0x26, "Shellhorn");
+            AddItemW(0x27, "Glove");
+            AddItemW(0x28, "Holy grail"); // before filling with all memories of the ruins
+            AddItemW(0x52, "Holy grail (broken)");
+            AddItemW(0x53, "Holy grail (filled)");
+            AddItemW(0x29, "Isis' pendant");
+            AddItemW(0x2a, "Crucifix");
+            AddItemW(0x2b, "Helmet");
+            AddItemW(0x2c, "Grapple claw");
+            AddItemW(0x2d, "Bronze mirror");
+            AddItemW(0x2e, "Eye of truth");
+            AddItemW(0x2f, "Ring");
+            AddItemW(0x30, "Scalesphere");
+            AddItemW(0x31, "Gauntlet");
+            AddItemW(0x47, "Treasures");
+            AddItemW(0x32, "Anchor");
+            AddItemW(0x33, "Plane model");
+            AddItemW(0x34, "Ocarina");
+            AddItemW(0x35, "Feather");
+            AddItemW(0x36, "Book of the dead");
+            AddItemW(0x37, "Fairy clothes");
+            AddItemW(0x38, "Scriptures");
+            AddItemW(0x39, "Hermes' boots");
+            AddItemW(0x3a, "Fruit of Eden");
+            AddItemW(0x3b, "Twin statue");
+            AddItemW(0x3c, "Bracelet");
+            AddItemW(0x3d, "Perfume");
+            AddItemW(0x3e, "Spaulder");
+            AddItemW(0x3f, "Dimensional key");
+            AddItemW(0x40, "Ice cape");
+            EndCat();
 
-            AddItemW("Origin seal", 0x41);
-            AddItemW("Birth seal", 0x42);
-            AddItemW("Life seal", 0x43);
-            AddItemW("Death seal", 0x44);
+            StartCat("Seals");
+            AddItemW(0x41, "Origin seal");
+            AddItemW(0x42, "Birth seal");
+            AddItemW(0x43, "Life seal");
+            AddItemW(0x44, "Death seal");
+            AddItemW(0x4a, "Forbidden treasure");
+            EndCat();
 
-            AddItemW("Forbidden treasure", 0x4a);
+            StartCat("Software");
+            AddItemW(0x55, "reader.exe");
+            AddItemW(0x56, "xmailer.exe");
+            AddItemW(0x57, "yagomap.exe");
+            AddItemW(0x58, "yagostr.exe");
+            AddItemW(0x59, "bunemon.exe");
+            AddItemW(0x5a, "buneplus.com");
+            AddItemW(0x5b, "torude.exe");
+            AddItemW(0x5c, "guild.exe");
+            AddItemW(0x5d, "mantra.exe");
+            AddItemW(0x5e, "emusic.exe");
+            AddItemW(0x5f, "beolamu.exe");
+            AddItemW(0x60, "deathv.exe");
+            AddItemW(0x61, "randc.exe");
+            AddItemW(0x62, "capstar.exe");
+            AddItemW(0x63, "move.exe");
+            AddItemW(0x64, "mekuri.exe");
+            AddItemW(0x65, "bounce.exe");
+            AddItemW(0x66, "miracle.exe");
+            AddItemW(0x67, "mirai.exe");
+            AddItemW(0x68, "lamulana.exe");
+            EndCat();
 
-            AddItemW("reader.exe", 0x55);
-            AddItemW("xmailer.exe", 0x56);
-            AddItemW("yagomap.exe", 0x57);
-            AddItemW("yagostr.exe", 0x58);
-            AddItemW("bunemon.exe", 0x59);
-            AddItemW("buneplus.com", 0x5a);
-            AddItemW("torude.exe", 0x5b);
-            AddItemW("guild.exe", 0x5c);
-            AddItemW("mantra.exe", 0x5d);
-            AddItemW("emusic.exe", 0x5e);
-            AddItemW("beolamu.exe", 0x5f);
-            AddItemW("deathv.exe", 0x60);
-            AddItemW("randc.exe", 0x61);
-            AddItemW("capstar.exe", 0x62);
-            AddItemW("move.exe", 0x63);
-            AddItemW("mekuri.exe", 0x64);
-            AddItemW("bounce.exe", 0x65);
-            AddItemW("miracle.exe", 0x66);
-            AddItemW("mirai.exe", 0x67);
-            AddItemW("lamulana.exe", 0x68);
+            StartCat("Puzzles");
+            StartCat("Surface");
+            AddCond(bytege(0x07b, 12), "Score=12", "Talk to Xelpud twice");
+            AddCond(bytege(0x145, 1), "Ruins open", "Ruins open");
+            AddCond(bytege(0x148, 1), "Ruins shortcut", "Ruins shortcut");
+            AddCond(bytege(0x148, 1), "Argus");
+            AddCond(bytege(0x14c, 1), "Surface hidden path", "Revealed hidden path"); // probably set at a funky time in any%, like when going to oxhead and horseface
+            EndCat();
 
-            AddEvent("Score=12", 0x07b, 12);
-            AddEvent("Luck fairy", () => (0x200 == (0x200 & game.Var<uint>("flags-2"))));
-            AddEvent("Fairies on cooldown", () => (0x10 == (0x10 & game.Var<uint>("flags-2"))));
-            AddEvent("Fairies off cooldown", () => (0 == (0x10 & game.Var<uint>("flags-2"))));
+            StartCat("Gate of Guidance");
+            AddCond(bytege(0x133, 1), "Amphisbaena ankh 1", "Ankh: block");
+            AddCond(bytege(0x133, 2), "Amphisbaena ankh 2", "Ankh: left dais");
+            AddCond(bytege(0x133, 5), "Amphisbaena ankh 5", "Ankh: right dais");
+            AddCond(bytege(0x136, 1), "Guidance jewel 1", "Jewel: break blocks");
+            AddCond(bytege(0x136, 2), "Guidance jewel 2", "Jewel: 1st dais");
+            AddCond(bytege(0x136, 3), "Guidance jewel 3", "Jewel: 2nd dais");
+            AddCond(bytege(0x134, 1), "Guidance elevator", "Elevator");
+            AddCond(bytege(0x143, 1), "Guidance G-2 coin chests dais", "G-2 coin chests dais");
+            EndCat();
 
-            AddEvent("Guidance jewel puzzle step 1", 0x136, 1);
-            AddEvent("Mausoleum jewel chest", 0x163);
-            AddEvent("Guidance jewel puzzle step 2", 0x136, 2);
-            AddEvent("Guidance jewel puzzle", 0x136, 3);
-            AddEvent("Amphisbaena ankh puzzle step 1", 0x136, 2);
-            AddEvent("Amphisbaena ankh puzzle", 0x136, 5);
+            StartCat("Mausoleum of the Giants");
+            AddCond(bytege(0x164, 1), "Sakit ankh", "Ankh");
+            AddCond(bytege(0x163, 1), "Mausoleum jewel puz", "Ankh jewel dais");
+            AddCond(bytege(0x165, 1), "Mausoleum orb puz", "Futo dais");
+            AddCond(byteeq(0x15f, 1), "Skydisk: Star");
+            AddCond(byteeq(0x15f, 2), "Skydisk: Moon");
+            AddCond(byteeq(0x15f, 3), "Skydisk: Sun");
+            AddCond(bytege(0x16a, 2), "Hard mode");
+            EndCat();
 
-            AddEvent("Sakit ankh", 0x164);
+            StartCat("Temple of the Sun");
+            AddCond(bytege(0x178, 1), "Sun ankh 1", "Ankh: unlock minecart");
+            AddCond(bytege(0x178, 5), "Sun ankh 5", "Ankh: minecart at ellmac");
+            AddCond(bytege(0x18f, 1), "Sun jewel puz", "Meditate under Wedjet");
+            AddCond(bytege(0x17a, 1), "Buer");
+            AddCond(bytege(0x267, 1), "Jumped into the sun"); // actually a temple of the moonlight flag for the moon opening animation
+            AddCond(bytenz(0x391), "Mulbruk"); // there are other flags we could check but this is the one set on the frame where your score is increased to 50, relevant to some routes
+            EndCat();
 
-            AddEvent("Buer", 0x17a);
-            AddEvent("Jump into the sun puzzle", 0x17e, 2);
-            AddEvent("Mulbruk", 0x391); // there are other flags we could check but this is the one set on the frame where your score is increased to 50, relevant to some routes
+            StartCat("Spring in the Sky");
+            AddCond(bytege(0x19f, 1), "Spring ankh", "Ankh");
+            AddCond(bytege(0x191, 1), "Nuckelavee");
+            AddCond(bytege(0x193, 1), "Floodgates");
+            AddCond(bytege(0x199, 1), "Aqueduct");
+            AddCond(bytege(0x194, 1), "Left hatch");
+            AddCond(bytege(0x195, 1), "Right hatch");
+            EndCat();
 
-            AddEvent("Nuckelavee", 0x191);
-            AddEvent("Floodgates", 0x193);
-            AddEvent("Left hatch", 0x194);
-            AddEvent("Right hatch", 0x195);
+            StartCat("Twin Labyrinths");
+            AddCond(bytege(0x1d8, 1), "Peryton");
+            AddCond(bytege(0x1e2, 1), "Zu");
+            AddCond(bytege(0x1df, 1), "Black witch");
+            AddCond(bytege(0x1e0, 1), "White witch");
+            EndCat();
 
-            AddEvent("Peryton", 0x1d8);
-            AddEvent("Black witch", 0x1df);
+            StartCat("Endless Corridor");
+            AddCond(bytege(0x1f5, 1), "Visit fairy queen");
+            AddCond(bytenz(0x118), "Fairies"); // this is the actual fairy points condition, 1f5 is the fairy queen's dialogue for the first two visits
+            EndCat();
 
-            AddEvent("Visit fairy queen", 0x1f5, 1);
-            AddEvent("Fairies", 0x118); // this is the actual fairy points condition, 1f5 is the fairy queen's dialogue for the first two visits
+            StartCat("Gate of Illusion");
+            AddCond(bytege(0x226, 1), "Eden", "Dispel Eden illusion");
+            AddCond(() => (getbyte(0x23b) >= 1 && getbyte(0x23c) >= 1 && getbyte(0x23d) >= 1), "Read cog tablets", "Read cog riddles");
+            EndCat();
 
-            AddEvent("Eden", 0x226);
-            AddEvent("Read cogs tablets", () => (getbyte(0x23b) >= 1 && getbyte(0x23c) >= 1 && getbyte(0x23d) >= 1));
+            StartCat("Graveyard of the Giants");
+            AddCond(bytege(0x249, 1), "Grave lift activated", "Lift activated");
+            AddCond(bytege(0x24a, 1), "Gauntlet barrier");
+            EndCat();
 
-            AddEvent("Grave lift activated", 0x249);
+            StartCat("Temple of Moonlight");
+            AddCond(bytege(0x266, 1), "Grind down the watchtower 1");
+            AddCond(bytege(0x266, 2), "Grind down the watchtower 2"); // fixme: might include the softlock state
+            AddCond(bytege(0x270, 1), "Eden: dancing man");
+            AddCond(bytege(0x29c, 1), "Eden: hands");
+            AddCond(bytege(0x29d, 1), "Eden: trap");
+            AddCond(bytege(0x29e, 1), "Eden: face");
+            AddCond(bytege(0x32a, 1), "Anubis visit"); // technically this is a Mulbruk conversation flag
+            EndCat();
 
-            AddEvent("Grind down the watchtower step 1", 0x266, 1);
-            AddEvent("Grind down the watchtower", 0x266, 2); // fixme: might include the softlock state
-            AddEvent("Jumped into the sun", 0x267, 1); // this actually is the moon splitting I think.  There's also 2ba a bit later, no idea what that is
-            AddEvent("Eden spot #2", 0x270);
-            AddEvent("Lit the tower of the goddess", 0x271);
-            AddEvent("Eden spot #1", 0x29e);
-            AddEvent("Anubis visit", 0x32a);
+            StartCat("Tower of the Goddess");
+            AddCond(bytege(0x271, 1), "Lit the tower of the goddess", "Lights on");
+            EndCat();
+            EndCat();
 
-            AddEvent("Coin chest: Mausoleum", 0x166);
+            Action<int, string> AddCoin = (idx, name) => AddCond(bytenz(idx), "Coin chest: " + name, name);
+            StartCat("Coin chests");
+            AddCoin(0x14d, "Surface D-3");
+            AddCoin(0x155, "Surface J-2");
+            AddCoin(0x156, "Surface K-1");
+            AddCoin(0x138, "Gate of Guidance G-2 top");
+            AddCoin(0x13b, "Gate of Guidance G-2 bot");
+            AddCoin(0x13c, "Gate of Guidance C-4");
+            AddCoin(0x166, "Mausoleum of the Giants");
+            AddCoin(0x18b, "Temple of the Sun");
+            AddCoin(0x1a2, "Spring in the Sky");
+            AddCoin(0x1ab, "Inferno Cavern E-2");
+            AddCoin(0x1ba, "Inferno Cavern C-1");
+            AddCoin(0x401, "Chamber of Extinction");
+            AddCoin(0x1ec, "Twin Labyrinths B-4");
+            AddCoin(0x1ee, "Twin Labyrinths H-3");
+            AddCoin(0x216, "Shrine of the Mother");
+            AddCoin(0x22c, "Gate of Illusion F-6");
+            AddCoin(0x233, "Gate of Illusion A-4");
+            AddCoin(0x242, "Graveyard of the Giants");
+            AddCoin(0x25a, "Temple of Moonlight");
+            AddCoin(0x27e, "Tower of the Goddess B-5");
+            AddCoin(0x286, "Tower of the Goddess E-1");
+            AddCoin(0x2bb, "Tower of Ruin");
+            AddCoin(0x2aa, "Chamber of Birth E-2");
+            AddCoin(0x2b1, "Chamber of Birth H-4");
+            AddCoin(0x2b3, "Chamber of Birth E-6");
+            AddCoin(0x2bf, "Dimensional Corridor");
+            AddCoin(0x3fc, "Escape");
+            EndCat();
 
-            AddEvent("Xelpud's e-mail #00", 0x2ee);
-            AddEvent("Xelpud's e-mail #01", 0x2ef);
-            AddEvent("Xelpud's e-mail #02", 0x349);
-            AddEvent("Xelpud's e-mail #03", 0x36e);
+            Action<int, int> AddEmail = (idx, num) => AddCond(bytenz(idx), String.Format("Xelpud's e-mail #{0:D2}", num), String.Format("#{0:D2}", num));
+            StartCat("E-Mails");
+            AddEmail(0x2ee, 0);
+            AddEmail(0x2ef, 1);
+            AddEmail(0x349, 2);
+            AddEmail(0x36e, 3);
             for (int i = 0; i < 41; i++)
-                AddEvent(String.Format("Xelpud's e-mail #{0:D2}", i + 4), 0x2f0 + i);
-            AddEvent("Xelpud's e-mails (all)", 0x328, 45);
+                AddEmail(0x2f0 + i, i + 4);
+            EndCat();
 
-            guardians.Sort();
-            splitcats.Add("Guardians", guardians);
-            items.Sort();
-            splitcats.Add("Items", items);
-            events.Sort();
-            splitcats.Add("Events", events);
+            StartCat("Misc");
+            AddCond(() => (0x200 == (0x200 & game.Var<uint>("flags-2"))), "Luck fairy");
+            AddCond(() => (0x10 == (0x10 & game.Var<uint>("flags-2"))), "Fairies on cooldown");
+            AddCond(() => (0 == (0x10 & game.Var<uint>("flags-2"))), "Fairies off cooldown");
+            EndCat();
 
             foreach (var key in intsplits.Keys)
                 splits[key.Normalize().ToLowerInvariant()] = key;

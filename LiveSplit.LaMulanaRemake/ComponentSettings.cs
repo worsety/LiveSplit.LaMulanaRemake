@@ -9,6 +9,8 @@ using System.Linq;
 using System.Windows.Forms;
 using LiveSplit.Model;
 using System.Text.RegularExpressions;
+using System.Collections.Specialized;
+using System.Collections;
 
 namespace LiveSplit.LaMulanaRemake
 {
@@ -25,16 +27,49 @@ namespace LiveSplit.LaMulanaRemake
             InitializeComponent();
         }
 
-        struct MappingControlPair { public TextBox splitname; public ComboBox mapto; };
+        struct MappingControlPair { public TextBox splitname; public Button mapto; };
         List<MappingControlPair> mapping_controls = new List<MappingControlPair>();
 
         public IDictionary<string, string> GetSplitMap(SplitMatcher remakesplitter)
         {
             Dictionary<string, string> ret = new Dictionary<string, string>();
             foreach (var a in mapping_controls)
-                if (remakesplitter.intsplits.ContainsKey(a.mapto.SelectedItem.ToString()))
-                    ret.Add(a.splitname.Text, a.mapto.SelectedItem.ToString());
+                if (a.mapto.Tag != null && remakesplitter.intsplits.ContainsKey((string)a.mapto.Tag))
+                    ret.Add(a.splitname.Text, (string)a.mapto.Tag);
             return ret;
+        }
+
+        string GetMenuPath(MenuItem m)
+        {
+            if (m.Parent is MenuItem)
+                return GetMenuPath((MenuItem)m.Parent) + "/" + m.Text;
+            return m.Text;
+        }
+
+        void SplitCondMenuHandler(object sender, EventArgs evargs)
+        {
+            MenuItem menuitem = (MenuItem)sender;
+            Button button = (Button)menuitem.GetContextMenu().SourceControl;
+            button.Text = GetMenuPath((MenuItem)sender);
+            button.Tag = menuitem.Tag;
+        }
+
+        void AddSplitConds(Menu.MenuItemCollection menuitems, OrderedDictionary conds)
+        {
+            foreach (DictionaryEntry splitcond in conds)
+            {
+                MenuItem item = new MenuItem((string)splitcond.Key);
+                if (splitcond.Value is OrderedDictionary)
+                {
+                    AddSplitConds(item.MenuItems, (OrderedDictionary)splitcond.Value);
+                }
+                else
+                {
+                    item.Click += SplitCondMenuHandler;
+                    item.Tag = splitcond.Value;
+                }
+                menuitems.Add(item);
+            }
         }
 
         public void SetSplits(LiveSplitState state, SplitMatcher remakesplitter)
@@ -50,16 +85,10 @@ namespace LiveSplit.LaMulanaRemake
                     splitnames.Add(splitname);
             }
 
-            List<string> splitlist = new List<string>();
-            splitlist.Add("");
-            foreach (string cat in remakesplitter.splitcats.Keys)
-            {
-                splitlist.Add(String.Format("--{0}--", cat));
-                foreach (string split in (List<string>)remakesplitter.splitcats[cat])
-                    splitlist.Add(split);
-            }
-
             this.SuspendLayout();
+
+            splitCondMenu.MenuItems.Clear();
+            AddSplitConds(splitCondMenu.MenuItems, remakesplitter.splitcats);
 
             mapping_controls.Clear();
 
@@ -74,16 +103,20 @@ namespace LiveSplit.LaMulanaRemake
                 y.panel.RowStyles.Clear();
                 foreach (string split in y.splits)
                 {
-                    int idx = remakesplitter.splits.ContainsKey(split) ? splitlist.IndexOf(remakesplitter.splits[split]) : 0;
                     TextBox splitbox = new TextBox { Text = split, Dock = DockStyle.Fill };
-                    ComboBox selector = new ComboBox
-                    {
-                        BindingContext = new BindingContext(),
-                        DataSource = splitlist,
-                        DropDownStyle = ComboBoxStyle.DropDownList,
-                        SelectedIndex = idx,
-                        Dock = DockStyle.Fill
-                    };
+                    Button selector;
+                    if (remakesplitter.splits.ContainsKey(split))
+                        selector = new Button
+                        {
+                            Text = remakesplitter.displaynames[remakesplitter.splits[split]],
+                            Tag = remakesplitter.splits[split],
+                            Dock = DockStyle.Fill,
+                        };
+                    else
+                        selector = new Button { Text = "Unmapped", Tag = null };
+                    selector.Dock = DockStyle.Fill;
+                    selector.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+                    selector.Click += (object sender, EventArgs evargs) => splitCondMenu.Show((Control)sender, new System.Drawing.Point(0, 0));
                     y.panel.Controls.Add(splitbox);
                     y.panel.Controls.Add(selector);
                     mapping_controls.Add(new MappingControlPair { splitname = splitbox, mapto = selector });

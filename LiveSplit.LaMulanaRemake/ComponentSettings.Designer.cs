@@ -35,6 +35,7 @@
             this.knownSplitsLayout = new System.Windows.Forms.TableLayoutPanel();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.otherSplitsLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.splitCondMenu = new System.Windows.Forms.ContextMenu();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -68,8 +69,8 @@
             // 
             this.unkSplitsLayout.AutoScroll = true;
             this.unkSplitsLayout.ColumnCount = 2;
-            this.unkSplitsLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
             this.unkSplitsLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.unkSplitsLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
             this.unkSplitsLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.unkSplitsLayout.Location = new System.Drawing.Point(3, 3);
             this.unkSplitsLayout.Name = "unkSplitsLayout";
@@ -93,8 +94,8 @@
             // 
             this.knownSplitsLayout.AutoScroll = true;
             this.knownSplitsLayout.ColumnCount = 2;
-            this.knownSplitsLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
             this.knownSplitsLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.knownSplitsLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
             this.knownSplitsLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.knownSplitsLayout.Location = new System.Drawing.Point(3, 3);
             this.knownSplitsLayout.Name = "knownSplitsLayout";
@@ -118,8 +119,8 @@
             // 
             this.otherSplitsLayout.AutoScroll = true;
             this.otherSplitsLayout.ColumnCount = 2;
-            this.otherSplitsLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
             this.otherSplitsLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.otherSplitsLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
             this.otherSplitsLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.otherSplitsLayout.Location = new System.Drawing.Point(3, 3);
             this.otherSplitsLayout.Name = "otherSplitsLayout";
@@ -151,5 +152,6 @@
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TableLayoutPanel otherSplitsLayout;
         private System.Windows.Forms.TableLayoutPanel unkSplitsLayout;
+        private System.Windows.Forms.ContextMenu splitCondMenu;
     }
 }
