@@ -124,8 +124,8 @@ namespace LiveSplit.LaMulanaRemake
             AddMap(0xda, "Shrine of the Mother");
             EndCat();
 
-            Action<int, string> AddItemB = (idx, name) => AddCond(byteeq(idx, 2), name);
-            Action<int, string> AddItemW = (idx, name) => AddCond(wordnz(idx), name);
+            Action<int, string> AddItemB = (idx, name) => AddCond(() => getbyte(idx) == 2 && !inshop(), name);
+            Action<int, string> AddItemW = (idx, name) => AddCond(() => getword(idx) != 0 && !inshop(), name);
             StartCat("Weapons");
             AddItemW(0x01, "Chain whip");
             AddItemW(0x02, "Flail whip");
