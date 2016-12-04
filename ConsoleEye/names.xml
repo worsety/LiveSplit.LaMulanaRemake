@@ -5,7 +5,10 @@
   <item id="byte-002" value="temp-002" />
   <item id="byte-003" value="temp-003" />
   <item id="byte-004" value="temp-004" />
+  <item id="byte-005" value="temp-005" />
+  <item id="byte-006" value="temp-006" />
   <item id="byte-007" value="temp-007" />
+  <item id="byte-008" value="temp-008" />
   <item id="byte-009" value="temp-009" />
   <item id="byte-00a" value="temp-00a" />
   <item id="byte-00b" value="temp-00b" />
@@ -15,15 +18,38 @@
   <item id="byte-00f" value="temp-00f" />
   <item id="byte-010" value="temp-010" />
   <item id="byte-011" value="temp-011" />
+  <item id="byte-012" value="temp-012" />
+  <item id="byte-013" value="temp-013" />
   <item id="byte-014" value="temp-014" />
+  <item id="byte-015" value="temp-015" />
   <item id="byte-016" value="temp-016" />
   <item id="byte-017" value="temp-017" />
   <item id="byte-018" value="temp-018" />
   <item id="byte-019" value="temp-019" />
+  <item id="byte-01a" value="temp-01a" />
+  <item id="byte-01b" value="temp-01b" />
+  <item id="byte-01c" value="temp-01c" />
+  <item id="byte-01d" value="temp-01d" />
+  <item id="byte-01e" value="temp-01e" />
+  <item id="byte-01f" value="temp-01f" />
+  <item id="byte-020" value="temp-020" />
+  <item id="byte-021" value="temp-021" />
+  <item id="byte-022" value="temp-022" />
+  <item id="byte-023" value="temp-023" />
+  <item id="byte-024" value="temp-024" />
+  <item id="byte-025" value="temp-025" />
+  <item id="byte-026" value="temp-026" />
   <item id="byte-027" value="temp-027" />
   <item id="byte-028" value="temp-028" />
   <item id="byte-029" value="temp-029" />
+  <item id="byte-02a" value="temp-02a" />
+  <item id="byte-02b" value="temp-02b" />
+  <item id="byte-02c" value="temp-02c" />
+  <item id="byte-02d" value="temp-02d" />
+  <item id="byte-02e" value="temp-02e" />
+  <item id="byte-02f" value="temp-02f" />
   <item id="byte-030" value="temp-030" />
+  <item id="byte-031" value="temp-031" />
   <item id="byte-032" value="temp-032" />
   <item id="byte-033" value="temp-033" />
   <item id="byte-034" value="temp-034" />
@@ -31,13 +57,49 @@
   <item id="byte-036" value="temp-036" />
   <item id="byte-037" value="temp-037" />
   <item id="byte-038" value="temp-038" />
+  <item id="byte-039" value="temp-039" />
+  <item id="byte-03a" value="temp-03a" />
+  <item id="byte-03b" value="temp-03b" />
   <item id="byte-03c" value="temp-03c" />
   <item id="byte-03d" value="temp-03d" />
   <item id="byte-03e" value="temp-03e" />
-  <item id="byte-043" value="temp-043" comments="guardian fights?" />
+  <item id="byte-03f" value="temp-03f" />
+  <item id="byte-040" value="temp-040" />
+  <item id="byte-041" value="temp-041" />
+  <item id="byte-042" value="temp-042" />
+  <item id="byte-043" value="temp-043" />
+  <item id="byte-044" value="temp-044" />
   <item id="byte-045" value="temp-045" />
+  <item id="byte-046" value="temp-046" />
+  <item id="byte-047" value="temp-047" />
+  <item id="byte-048" value="temp-048" />
+  <item id="byte-049" value="temp-049" />
+  <item id="byte-04a" value="temp-04a" />
   <item id="byte-04b" value="temp-04b" />
   <item id="byte-04c" value="temp-04c" />
+  <item id="byte-04d" value="temp-04d" />
+  <item id="byte-04e" value="temp-04e" />
+  <item id="byte-04f" value="temp-04f" />
+  <item id="byte-050" value="temp-050" />
+  <item id="byte-051" value="temp-051" />
+  <item id="byte-052" value="temp-052" />
+  <item id="byte-053" value="temp-053" />
+  <item id="byte-054" value="temp-054" />
+  <item id="byte-055" value="temp-055" />
+  <item id="byte-056" value="temp-056" />
+  <item id="byte-057" value="temp-057" />
+  <item id="byte-058" value="temp-058" />
+  <item id="byte-059" value="temp-059" />
+  <item id="byte-05a" value="temp-05a" />
+  <item id="byte-05b" value="temp-05b" />
+  <item id="byte-05c" value="temp-05c" />
+  <item id="byte-05d" value="temp-05d" />
+  <item id="byte-05e" value="temp-05e" />
+  <item id="byte-05f" value="temp-05f" />
+  <item id="byte-060" value="temp-060" />
+  <item id="byte-061" value="temp-061" />
+  <item id="byte-062" value="temp-062" />
+  <item id="byte-063" value="temp-063" />
   <item id="byte-064" value="grail-guidance" />
   <item id="byte-065" value="grail-maus" />
   <item id="byte-066" value="grail-sun" />
@@ -323,6 +385,7 @@
   <item id="byte-18a" value="sun-puz-pot3" comments="1=3rd wall part" />
   <item id="byte-18b" value="sun-coin" comments="1" />
   <item id="byte-18c" value="sun-puz-orb" comments="1" />
+  <item id="byte-18d" value="sun-discount-shop" comments="1" />
   <item id="byte-18e" value="sun-puz-mulbruk" comments="1=talked to 2=touched seal 3=talked to mulbruk again" />
   <item id="byte-18f" value="sun-puz-jewel" comments="1" />
   <item id="byte-190" value="spr-puz-orb" comments="1" />

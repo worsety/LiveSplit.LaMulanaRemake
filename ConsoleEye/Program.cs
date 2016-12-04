@@ -88,7 +88,7 @@ namespace CrappyConsoleEye
                     game.vars.UpdateAll(game.proc);
                     newbytes = game.readbytes();
                     newwords = game.readwords();
-                    for (int i = 0; i < 0x1000; i++)
+                    for (int i = 100; i < 0x1000; i++)
                         if (newbytes[i] != oldbytes[i])
                             changed(newbytes[i], oldbytes[i], String.Format("byte-{0:x3}", i), now - start);
                     for (int i = 0; i < 510; i += 2)
