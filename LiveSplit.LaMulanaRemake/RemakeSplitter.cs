@@ -499,6 +499,7 @@ namespace LiveSplit.LaMulanaRemake
             AddCond(bytege(0x2e5, 1), "20% La-Mulanese");
             AddCond(bytege(0x2e5, 2), "60% La-Mulanese");
             AddCond(bytege(0x2e5, 3), "100% La-Mulanese");
+            AddCond(wordnz(0x19), "Light lamp");
             EndCat();
 
             foreach (var key in intsplits.Keys)
