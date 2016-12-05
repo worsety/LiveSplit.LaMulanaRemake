@@ -5,6 +5,8 @@ using LiveSplit.UI.Components;
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using System.Windows.Forms;
+using System.Threading;
 
 [assembly: ComponentFactory(typeof(LiveSplit.LaMulanaRemake.Factory))]
 
@@ -17,7 +19,7 @@ namespace LiveSplit.LaMulanaRemake
         public ComponentCategory Category => ComponentCategory.Control;
         public IComponent Create(LiveSplitState state) => new LaMulanaComponent(state);
 
-        public Version Version => new Version(0, 3, 5);
+        public Version Version => new Version(0, 4, 0);
         public string UpdateName => ComponentName;
         public string UpdateURL => "https://worsety.github.io/files/LiveSplit.LaMulanaRemake/";
         public string XMLURL => "https://worsety.github.io/files/LiveSplit.LaMulanaRemake/updates.xml";
@@ -51,7 +53,10 @@ namespace LiveSplit.LaMulanaRemake
 
         public ComponentSettings settings_control;
 
-        public void Dispose() {
+        bool warnedaboutaccess = false;
+
+        public void Dispose()
+        {
             if (state != null)
                 state.RunManuallyModified -= RunModified;
         }
@@ -129,6 +134,18 @@ namespace LiveSplit.LaMulanaRemake
             try
             {
                 autosplitter?.Update(state, timer);
+            }
+            catch (System.ComponentModel.Win32Exception e)
+            {
+                if (e.NativeErrorCode == 5 /* access denied */ && e.TargetSite.ToString().StartsWith("Microsoft.Win32.SafeHandles.SafeProcessHandle OpenProcess"))
+                {
+                    if (!warnedaboutaccess)
+                        new Thread(new ThreadStart(() => MessageBox.Show(
+                            "Unable to access the La-Mulana process, please check the game's compatibility settings"
+                            + " and uncheck \"Run this program as an administrator\" if it is checked."
+                            ))).Start();
+                    warnedaboutaccess = true;
+                }
             }
             catch { }
         }

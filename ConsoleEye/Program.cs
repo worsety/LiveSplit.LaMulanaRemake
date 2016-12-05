@@ -55,6 +55,7 @@ namespace CrappyConsoleEye
             System.Console.WriteLine("({0,10:f02}) {1,15} := {2" + format + "} from {3" + format + "}", timestamp.TotalSeconds, displayname, cur, old);
         }
 
+        static bool warnedaboutaccess = false;
         static void Main(string[] args)
         {
             DateTime start = DateTime.UtcNow, now = DateTime.MinValue, checkednames = DateTime.MinValue;
@@ -101,7 +102,15 @@ namespace CrappyConsoleEye
                     oldbytes = newbytes;
                     oldwords = newwords;
                 }
-                catch (Win32Exception) { }
+                catch (Win32Exception e) {
+                    if (e.NativeErrorCode == 5 && e.TargetSite.ToString().StartsWith("Microsoft.Win32.SafeHandles.SafeProcessHandle OpenProcess"))
+                    {
+                        if (!warnedaboutaccess)
+                            System.Console.WriteLine("Unable to access LaMulanaWin.exe, please check the compatibility settings\n"
+                                + "and uncheck \"Run this program as an administrator\" if it is checked.");
+                        warnedaboutaccess = true;
+                    }
+                }
                 catch (ArgumentNullException) { }
             }
         }
