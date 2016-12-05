@@ -257,7 +257,7 @@
   <item id="byte-103" value="w-treasures" />
   <item id="byte-104" value="w-diary" />
   <item id="byte-105" value="w-lamulanatalisman" />
-  <item id="byte-106" value="hell temple?" comments="2 = dracuets in credits" />
+  <item id="byte-106" value="w-forbidden" comments="2" />
   <item id="byte-108" value="w-medicine" comments="2" />
   <item id="byte-109" value="w-medicine-green" comments="2" />
   <item id="byte-10a" value="w-medicine-red" comments="2" />
@@ -864,7 +864,59 @@
   <item id="byte-531" value="tablet-birth-rosetta" comments="1" />
   <item id="byte-545" value="mantra-birth" comments="1" />
   <item id="byte-546" value="mantra-death" comments="1" />
+  <item id="byte-708" value="hell-scan-open" comments="1" />
+  <item id="byte-709" value="hell-scan-close" comments="1" />
+  <item id="byte-70a" value="hell-scan-smile" comments="1" />
+  <item id="byte-70b" value="hell-scan-anger" comments="1" />
+  <item id="byte-70c" value="hell-room34" comments="1" />
+  <item id="byte-70d" value="hell-room33-pillars" comments="1" />
+  <item id="byte-70e" value="hell-room20-floor" comments="1" />
+  <item id="byte-710" value="hell-room35" comments="1,2" />
+  <item id="byte-7d0" value="hell-shortcut1" comments="1" />
+  <item id="byte-7d1" value="hell-room02" comments="1" />
+  <item id="byte-7d2" value="hell-room03" comments="1,2" />
+  <item id="byte-7d3" value="hell-room04" comments="1,2" />
+  <item id="byte-7d4" value="hell-room05" comments="1" />
+  <item id="byte-7d5" value="hell-room06" comments="1" />
+  <item id="byte-7d6" value="hell-room07" comments="1" />
+  <item id="byte-7d7" value="hell-room08" comments="1=bomb 2=dais" />
+  <item id="byte-7d8" value="hell-room09" comments="1" />
+  <item id="byte-7d9" value="hell-room10" comments="1" />
+  <item id="byte-7da" value="hell-room11" comments="1" />
+  <item id="byte-7db" value="hell-room12" comments="1" />
+  <item id="byte-7dc" value="hell-room13" comments="1" />
+  <item id="byte-7de" value="hell-room15" comments="1=dais, unsure if necessary?" />
+  <item id="byte-7df" value="hell-sleep1" />
+  <item id="byte-7e0" value="hell-room17" comments="1" />
+  <item id="byte-7e1" value="hell-room18" comments="1" />
+  <item id="byte-7e2" value="hell-room19" comments="1" />
+  <item id="byte-7e3" value="hell-sleep2" />
+  <item id="byte-7e4" value="hell-sleep3" />
+  <item id="byte-7e5" value="hell-room22" comments="1" />
+  <item id="byte-7e6" value="hell-room20" comments="1" />
+  <item id="byte-7e7" value="hell-room24" comments="1" />
+  <item id="byte-7e8" value="hell-sleep4" comments="1" />
+  <item id="byte-7e9" value="hell-room25" comments="1" />
+  <item id="byte-7ea" value="hell-room27" comments="1" />
+  <item id="byte-7eb" value="hell-sleep-count" comments="5" />
+  <item id="byte-7ec" value="hell-tablet-door?" comments="1" />
+  <item id="byte-7ed" value="hell-room30" comments="1" />
+  <item id="byte-7ee" value="hell-room31" comments="1" />
+  <item id="byte-7ef" value="hell-room32" comments="1" />
+  <item id="byte-7f0" value="hell-room33" comments="1" />
+  <item id="byte-7f1" value="hell-boss" comments="1=ankh 2=start 3=kill" />
   <item id="byte-7f3" value="hell-wall-lavapit" comments="1" />
+  <item id="byte-7f4" value="hell-wall-shortcut" comments="1" />
+  <item id="byte-7f6" value="hell-sleep5" comments="1" />
+  <item id="byte-7f7" value="hell-wall-fairy" comments="1=key fairy used 2=block on platform" />
+  <item id="byte-7f8" value="hell-wall-room27" comments="1" />
+  <item id="byte-7f9" value="hell-tablet-open" comments="1" />
+  <item id="byte-7fa" value="hell-tablet-close" comments="1" />
+  <item id="byte-7fb" value="hell-tablet-smile" comments="1" />
+  <item id="byte-7fc" value="hell-tablet-anger" comments="1" />
+  <item id="byte-7fd" value="hell-puz-scan" comments="1-4=scans, 5-6=tablet" />
+  <item id="byte-806" value="pots-hell1" />
+  <item id="byte-807" value="pots-hell2" />
   <item id="word-000" value="invwp-whipunused?" comments="fairy queen in the credits checks for any of 0/1/2 for the whip" />
   <item id="word-001" value="invwp-chain" />
   <item id="word-002" value="invwp-flail" />
