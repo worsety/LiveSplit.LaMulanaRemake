@@ -258,6 +258,7 @@ namespace LiveSplit.LaMulanaRemake
             AddMantra(0x12b, "MARDUK");
             AddMantra(0x12a, "SABBAT");
             AddMantra(0x129, "MU");
+            AddCond(bytege(0x128, 2), "Removed statue blocking VIY");
             AddMantra(0x128, "VIY");
             AddMantra(0x127, "BAHRUN");
             AddMantra(0x126, "WEDJET");
@@ -375,6 +376,7 @@ namespace LiveSplit.LaMulanaRemake
             AddCond(bytege(0x29d, 1), "Eden: trap");
             AddCond(bytege(0x29e, 1), "Eden: face");
             AddCond(bytege(0x32a, 1), "Anubis visit"); // technically this is a Mulbruk conversation flag
+            AddCond(bytege(0x26c, 1), "Anubis");
             AddCond(bytege(0x07a, 1), "Alsedana");
             EndCat();
 
