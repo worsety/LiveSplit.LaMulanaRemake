@@ -49,8 +49,8 @@ namespace LiveSplit.LaMulanaRemake
             AddGuardian(0x0f8, "Ellmac");
             AddGuardian(0x0f9, "Bahamut");
             AddGuardian(0x0fa, "Viy");
-            AddGuardian(0x0fb, "Baphomet");
-            AddGuardian(0x0fc, "Palenque");
+            AddGuardian(0x0fb, "Palenque");
+            AddGuardian(0x0fc, "Baphomet");
             AddGuardian(0x0fd, "Tiamat");
             AddGuardian(0x0fe, "Mother");
             EndCat();
