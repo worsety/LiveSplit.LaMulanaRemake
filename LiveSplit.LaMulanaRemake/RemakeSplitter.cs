@@ -455,6 +455,7 @@ namespace LiveSplit.LaMulanaRemake
             AddCoin(0x401, "Chamber of Extinction");
             AddCoin(0x1ec, "Twin Labyrinths B-4");
             AddCoin(0x1ee, "Twin Labyrinths H-3");
+            AddCoin(0x203, "Endless Corridor");
             AddCoin(0x22c, "Gate of Illusion F-6");
             AddCoin(0x233, "Gate of Illusion A-4");
             AddCoin(0x242, "Graveyard of the Giants");

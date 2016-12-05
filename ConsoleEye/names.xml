@@ -496,6 +496,8 @@
   <item id="byte-1ff" value="endless-5rdais?" comments="1" />
   <item id="byte-200" value="endless-hidden-shop" comments="1" />
   <item id="byte-201" value="endless-ladder-sealed" comments="1,2" />
+  <item id="byte-202" value="endless-wall-coin" comments="1,2" />
+  <item id="byte-203" value="endless-coin" comments="1" />
   <item id="byte-204" value="endless-1st-ladder" comments="1 unsure why these exist" />
   <item id="byte-205" value="endless-2nd-ladder" comments="1 unsure why these exist" />
   <item id="byte-206" value="endless-3rd-ladder" comments="1 unsure why these exist" />
