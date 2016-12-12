@@ -392,7 +392,7 @@ namespace LiveSplit.LaMulanaRemake
 
             StartCat("Tower of Ruin");
             AddCond(bytege(0x28e, 1), "Thunderbird");
-            AddCond(bytege(0x28f, 1), "Uncover medicine statue");
+            AddCond(bytege(0x28f, 2), "Uncover medicine statue");
             AddCond(bytege(0x298, 1), "Djed pillar 1");
             AddCond(bytege(0x298, 3), "Djed pillar 2");
             AddCond(bytege(0x298, 3), "Nuwa");
