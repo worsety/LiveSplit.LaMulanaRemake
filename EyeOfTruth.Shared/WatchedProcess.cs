@@ -11,16 +11,18 @@ namespace EyeOfTruth
         public MemoryWatcherList vars = new MemoryWatcherList();
 
         public virtual bool Attach() { throw new NotImplementedException(); }
-        public bool Attach(string name)
+        public bool Attach(Func<Process, bool> pred)
         {
             if (proc == null || proc.HasExited)
             {
-                proc = Process.GetProcessesByName(name).FirstOrDefault((p) => !p.HasExited && p.MainWindowHandle != IntPtr.Zero);
+                proc = Process.GetProcesses().FirstOrDefault((p) => pred(p) && !p.HasExited && p.MainWindowHandle != IntPtr.Zero);
                 if (proc != null)
                     vars.Clear();
             }
             return proc != null && !proc.HasExited && proc.MainWindowHandle != IntPtr.Zero;
         }
+
+        public bool Attach(string name) => Attach((Process p) => p.ProcessName == name);
 
         public object Var(string id)
         {

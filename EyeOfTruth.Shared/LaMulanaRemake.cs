@@ -1,6 +1,8 @@
 ﻿using LiveSplit.ComponentUtil;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 
 namespace EyeOfTruth
 {
@@ -24,7 +26,20 @@ namespace EyeOfTruth
 
         public override bool Attach()
         {
-            if (!Attach("LaMulanaWin"))
+            if (!Attach((Process p) =>
+            {
+                try
+                {
+                    return p.MainModule.FileVersionInfo.ProductName == "La-Mulana";
+                }
+                catch (Win32Exception) // sigh, see http://www.aboutmycode.com/net/access-denied-process-bugs/
+                {
+                    if (p.ProcessName.StartsWith("LaMulanaWin"))
+                        throw;
+                    return false;
+                }
+                catch { return false; }
+            }))
             {
                 offsets = null;
                 return false;

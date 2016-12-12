@@ -768,6 +768,7 @@
   <item id="byte-32d" value="mulbruk-goddess-climb" comments="1=discover 2=talk" />
   <item id="byte-32e" value="mulbruk-sixth-children" comments="1=discover 2=talk" />
   <item id="byte-32f" value="mulbruk-moreaboutgods" comments="1=discover 2=talk" />
+  <item id="byte-331" value="mulbruk-twinlabplat" comments="1=discover 2=talk" />
   <item id="byte-337" value="mulbruk-ocarina" comments="1=discover 2=talk" />
   <item id="byte-348" value="devroom-combo-active" comments="toggle" />
   <item id="byte-349" value="mail-02" />
