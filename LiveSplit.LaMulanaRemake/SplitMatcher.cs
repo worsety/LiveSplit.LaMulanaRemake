@@ -90,7 +90,7 @@ namespace LiveSplit.LaMulanaRemake
                     }
                     else if (intsplits[splits[splitname]]())
                     {
-                        if (DateTime.Now - lastsplitat < TimeSpan.FromMilliseconds(100))
+                        if (DateTime.UtcNow - lastsplitat < TimeSpan.FromMilliseconds(100))
                             timer.SkipSplit();
                         else
                             timer.Split();
