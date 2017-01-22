@@ -28,15 +28,15 @@ namespace EyeOfTruth
         {
             if (!Attach((Process p) =>
             {
+                if (!p.ProcessName.ToLowerInvariant().StartsWith("lamulana"))
+                    return false;
                 try
                 {
                     return p.MainModule.FileVersionInfo.ProductName == "La-Mulana";
                 }
                 catch (Win32Exception) // sigh, see http://www.aboutmycode.com/net/access-denied-process-bugs/
                 {
-                    if (p.ProcessName.StartsWith("LaMulanaWin"))
-                        throw;
-                    return false;
+                    throw;
                 }
                 catch { return false; }
             }))
