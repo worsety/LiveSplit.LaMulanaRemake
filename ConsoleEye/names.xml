@@ -702,7 +702,7 @@
   <item id="byte-2de" value="tru-momsealbits" comment="bits 0-3 right to left" />
   <item id="byte-2df" value="tru-beezelbub" comment="1" />
   <item id="byte-2e0" value="tru-puz-ankh" comment="1=dais 3=unsealed" />
-  <item id="byte-2e1" value="all guardians?" comment="mystery" />
+  <item id="byte-2e1" value="wind-howling" />
   <item id="byte-2e2" value="time-wall-lamulana" comment="1" />
   <item id="byte-2e3" value="time-xelpud" comment="1" />
   <item id="byte-2e4" value="cantleave" />
@@ -798,7 +798,7 @@
   <item id="byte-36d" value="god-shortcut" comments="1" />
   <item id="byte-36e" value="mail-03" />
   <item id="byte-37e" value="xelpud-lamulanatalisman" />
-  <item id="byte-382" value="start-escape?" comments="1=frame mother=3" />
+  <item id="byte-382" value="escaping" />
   <item id="byte-384" value="fairy-count" />
   <item id="byte-386" value="keyfairy-points" comments="4 for key fairy in credits" />
   <item id="byte-387" value="gyonin-purchase" comments="1 for gyonin in credits" />
