@@ -19,7 +19,7 @@ namespace LiveSplit.LaMulanaRemake
         public ComponentCategory Category => ComponentCategory.Control;
         public IComponent Create(LiveSplitState state) => new LaMulanaComponent(state);
 
-        public Version Version => new Version(0, 4, 6);
+        public Version Version => new Version(0, 4, 7);
         public string UpdateName => ComponentName;
         public string UpdateURL => "https://worsety.github.io/files/LiveSplit.LaMulanaRemake/";
         public string XMLURL => "https://worsety.github.io/files/LiveSplit.LaMulanaRemake/updates.xml";

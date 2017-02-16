@@ -268,6 +268,7 @@ namespace LiveSplit.LaMulanaRemake
 
             StartCat("Surface");
             AddCond(bytege(0x07b, 12), "Score=12", "Talk to Xelpud twice");
+            AddCond(bytege(0x327, 1), "Show Talisman to Xelpud");
             AddCond(bytege(0x145, 1), "Ruins open", "Ruins open");
             AddCond(bytege(0x148, 1), "Ruins shortcut", "Ruins shortcut");
             AddCond(bytege(0x148, 1), "Argus");
@@ -371,6 +372,7 @@ namespace LiveSplit.LaMulanaRemake
             StartCat("Temple of Moonlight");
             AddCond(bytege(0x266, 1), "Grind down the watchtower 1");
             AddCond(bytege(0x266, 2), "Grind down the watchtower 2"); // fixme: might include the softlock state
+            AddCond(bytege(0x262, 1), "Moon-gazing pit women");
             AddCond(bytege(0x270, 1), "Eden: dancing man");
             AddCond(bytege(0x29c, 1), "Eden: hands");
             AddCond(bytege(0x29d, 1), "Eden: trap");
