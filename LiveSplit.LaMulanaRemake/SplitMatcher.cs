@@ -23,6 +23,7 @@ namespace LiveSplit.LaMulanaRemake
         public OrderedDictionary splitcats;
 
         public DateTime lastsplitat = DateTime.MinValue;
+        public int lastsplit = -1;
         private Regex split_regex = new Regex(@"^(-|{.+})?\s*(.+?)\s*$", RegexOptions.Compiled);
 
         public SplitMatcher()
@@ -81,22 +82,26 @@ namespace LiveSplit.LaMulanaRemake
                         state.SetGameTime(igt);
                     }
 
-                    Match m = split_regex.Match(state.CurrentSplit.Name);
-                    string splitname = m.Success ? m.Groups[2].Value.Normalize().ToLowerInvariant() : "";
-                    if (!splits.ContainsKey(splitname))
+                    while (true)
                     {
-                        timer.SkipSplit();
-                        lastsplitat = DateTime.UtcNow;
-                    }
-                    else if (intsplits[splits[splitname]]())
-                    {
-                        if (DateTime.UtcNow - lastsplitat < TimeSpan.FromMilliseconds(100))
+                        var cursplit = state.CurrentSplitIndex;
+                        if (cursplit <= lastsplit || cursplit >= state.Run.Count)
+                            return;
+
+                        Match m = split_regex.Match(state.Run[cursplit].Name);
+                        string splitname = m.Success ? m.Groups[2].Value.Normalize().ToLowerInvariant() : "";
+                        if (!splits.ContainsKey(splitname))
                             timer.SkipSplit();
+                        else if (intsplits[splits[splitname]]())
+                            if (DateTime.UtcNow - lastsplitat < TimeSpan.FromMilliseconds(100))
+                                timer.SkipSplit();
+                            else
+                                timer.Split();
                         else
-                            timer.Split();
+                            return;
                         lastsplitat = DateTime.UtcNow;
+                        lastsplit = cursplit;
                     }
-                    return;
             }
         }
     }
