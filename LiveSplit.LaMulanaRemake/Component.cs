@@ -19,7 +19,7 @@ namespace LiveSplit.LaMulanaRemake
         public ComponentCategory Category => ComponentCategory.Control;
         public IComponent Create(LiveSplitState state) => new LaMulanaComponent(state);
 
-        public Version Version => new Version(0, 4, 8);
+        public Version Version => new Version(0, 4, 9);
         public string UpdateName => ComponentName;
         public string UpdateURL => "https://worsety.github.io/files/LiveSplit.LaMulanaRemake/";
         public string XMLURL => "https://worsety.github.io/files/LiveSplit.LaMulanaRemake/updates.xml";
@@ -70,10 +70,10 @@ namespace LiveSplit.LaMulanaRemake
             settings_control = new ComponentSettings(this);
 
             state.RunManuallyModified += RunModified;
-            state.OnReset += (sender, arg) => { autosplitter.lastsplit = -1; };
-            state.OnStart += (sender, arg) => { autosplitter.lastsplit = -1; autosplitter.lastsplitat = DateTime.UtcNow; };
-            state.OnSkipSplit += (sender, arg) => { autosplitter.lastsplitat = DateTime.UtcNow; };
-            state.OnSplit += (sender, arg) => { autosplitter.lastsplitat = DateTime.UtcNow; };
+            state.OnReset += (sender, arg) => { if (autosplitter != null) autosplitter.lastsplit = -1; };
+            state.OnStart += (sender, arg) => { if (autosplitter != null) { autosplitter.lastsplit = -1; autosplitter.lastsplitat = DateTime.UtcNow; } };
+            state.OnSkipSplit += (sender, arg) => { if (autosplitter != null) autosplitter.lastsplitat = DateTime.UtcNow; };
+            state.OnSplit += (sender, arg) => { if (autosplitter != null) autosplitter.lastsplitat = DateTime.UtcNow; };
             RunModified(state, null);
         }
 
@@ -85,7 +85,8 @@ namespace LiveSplit.LaMulanaRemake
                 autosplitter = classic;*/
             else
                 autosplitter = null;
-            autosplitter.lastsplit = -1;
+            if (autosplitter != null)
+                autosplitter.lastsplit = -1;
             settings_control.SetSplits(state, remake);
         }
 
