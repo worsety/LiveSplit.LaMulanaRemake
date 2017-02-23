@@ -20,6 +20,8 @@ namespace EyeOfTruth
             {"1.0.0.1", new Offsets { bytes = 0x2D5A70, wordsptr = 0x2D5650, flags = 0x2D59C0, igt = 0x2D5044 } },
             {"1.3.3.1", new Offsets { bytes = 0x2D7E80, wordsptr = 0x2D7858, flags = 0x2D7BC8, igt = 0x2D724C } },
             {"1.5.5.2", new Offsets { bytes = 0x2E1E48, wordsptr = 0x2E1820, flags = 0x2E1B90, igt = 0x2E1214 } },
+            {"1.6.6.1", new Offsets { bytes = 0x2D7D08, wordsptr = 0x2D76E4, flags = 0x2D7A40, igt = 0x2D70D8 } },
+            {"1.6.6.2", new Offsets { bytes = 0x2E1E48, wordsptr = 0x2E1820, flags = 0x2E1B90, igt = 0x2E1214 } },
         };
 
         DeepPointer bytesptr, wordsptr;
