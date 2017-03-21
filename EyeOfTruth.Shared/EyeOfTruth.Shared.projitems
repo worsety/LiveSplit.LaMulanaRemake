@@ -9,6 +9,7 @@
     <Import_RootNamespace>EyeOfTruth</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)LaMulanaClassic.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LaMulanaRemake.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameVar.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WatchedProcess.cs" />

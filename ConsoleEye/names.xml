@@ -458,6 +458,7 @@
   <item id="byte-1d5" value="maus-map-redir" comments="1->chest" />
   <item id="byte-1d7" value="twin-poison" comments="1=counting down, 2=fatal in the twins race rooms; interestingly this isn't cleared if you exit abnormally" />
   <item id="byte-1d8" value="twin-peryton" comments="1=killed 2=left" />
+  <item id="byte-1d9" value="twin-trap-platform-pos" comments="1" />
   <item id="byte-1da" value="twin-floor-katana" comments="1" />
   <item id="byte-1db" value="twin-grail-lift" comments="1=solved 2=seen" />
   <item id="byte-1dc" value="twin-puz-release" comments="1=first dais 2=second dais" />
