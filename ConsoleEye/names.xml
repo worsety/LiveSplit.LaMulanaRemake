@@ -989,7 +989,7 @@
   <item id="word-042" value="invseal-2" />
   <item id="word-043" value="invseal-3" />
   <item id="word-044" value="invseal-4" />
-  <item id="word-045" value="inv-mystery-45" />
+  <item id="word-045" value="inv-sacredorb" comments="only set briefly on collecting one, internally causes an increase in max hp and a refill" />
   <item id="word-046" value="maps" />
   <item id="word-047" value="invtr-treasures" />
   <item id="word-048" value="invus-diary" />
