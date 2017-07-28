@@ -362,6 +362,7 @@ namespace LiveSplit.LaMulanaRemake
             AddCond(bytege(0x23a, 4), "Cog 4", "Use cog");
             AddCond(bytege(0x239, 1), "Close sacrificial pit");
             AddCond(bytege(0x237, 1), "Chi You");
+            AddCond(bytege(0x389, 1), "Dev Room: Duplex");
             EndCat();
 
             StartCat("Graveyard of the Giants");
@@ -380,6 +381,7 @@ namespace LiveSplit.LaMulanaRemake
             AddCond(bytege(0x32a, 1), "Anubis visit"); // technically this is a Mulbruk conversation flag
             AddCond(bytege(0x26c, 1), "Anubis");
             AddCond(bytege(0x07a, 1), "Alsedana");
+            AddCond(bytege(0x38a, 1), "Dev Room: Samieru");
             EndCat();
 
             StartCat("Tower of the Goddess");
@@ -390,6 +392,7 @@ namespace LiveSplit.LaMulanaRemake
             AddCond(bytege(0x27f, 1), "Vimana (left)");
             AddCond(bytege(0x280, 1), "Vimana (right)");
             AddCond(bytege(0x38e, 1), "Reveal Spaulder"); // maybe ACE unlocks this while going somewhere but doesn't pick it up until mother
+            AddCond(bytege(0x388, 1), "Dev Room: Naramura");
             EndCat();
 
             StartCat("Tower of Ruin");
@@ -439,6 +442,16 @@ namespace LiveSplit.LaMulanaRemake
 
             StartCat("Hell Temple");
             AddCond(bytege(0x3bb, 1), "Unlock Hell Temple");
+            AddCond(bytege(0x7d0, 1), "Hell shortcut", "Unlock shortcut");
+            AddCond(bytege(0x7e6, 1), "Hell bridge", "Bridge");
+            AddCond(() => (getbyte(0x7f9) != 0 && getbyte(0x7fa) != 0&& getbyte(0x7fb) != 0 && getbyte(0x7fc) != 0), "Read faces tablets");
+            AddCond(bytege(0x708, 1), "Face: Open", "Face: Open (26, grapple)");
+            AddCond(bytege(0x709, 1), "Face: Close", "Face: Close (21, fairy)");
+            AddCond(bytege(0x70a, 1), "Face: Joy", "Face: Joy (6)");
+            AddCond(bytege(0x70b, 1), "Face: Anger", "Face: Anger (18, dark)");
+            AddCond(bytege(0x7ec, 6), "Faces (full puzzle)");
+            AddCond(bytege(0x7f1, 2), "The Boss start");
+            AddCond(bytege(0x7f1, 3), "The Boss");
             AddCond(bytege(0x106, 2), "Beat Hell Temple");
             EndCat();
             EndCat();
