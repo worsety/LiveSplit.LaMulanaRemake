@@ -156,6 +156,7 @@
   <item id="byte-09a" value="w-cog" />
   <item id="byte-09b" value="w-lamp" />
   <item id="byte-09c" value="w-pochettekey" />
+  <item id="byte-09d" value="w-dragonbone" comments="never set because of a shop scripting error, instead you get 0x9d dragon bones" />
   <item id="byte-09e" value="w-cskull" />
   <item id="byte-09f" value="w-vessel" />
   <item id="byte-0a1" value="w-woman" />
