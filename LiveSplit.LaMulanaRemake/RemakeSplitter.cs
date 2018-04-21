@@ -520,6 +520,26 @@ namespace LiveSplit.LaMulanaRemake
             AddCond(wordnz(0x19), "Light lamp");
             EndCat();
 
+            Action<int, string> AddEBGuardian = delegate (int flag, string name) {
+                AddCond(bytege(flag, 1), "Endless Battle " + name + " ankh spawned", name + " ankh spawned");
+                AddCond(bytege(flag, 2), "Endless Battle " + name + " started", name + " started");
+                AddCond(bytege(flag, 3), "Endless Battle " + name + " killed", name + " killed");
+            };
+            StartCat("Time Attack");
+            AddCond(bytenz(1000), "Completed time attack");
+            StartCat("Endless Battle");
+            AddEBGuardian(100, "Amphisbaena");
+            AddEBGuardian(101, "Sakit");
+            AddEBGuardian(102, "Ellmac");
+            AddEBGuardian(103, "Bahamut");
+            AddEBGuardian(104, "Viy");
+            AddEBGuardian(105, "Palenque");
+            AddEBGuardian(106, "Baphomet");
+            AddEBGuardian(107, "Tiamat");
+            AddEBGuardian(108, "Mother");
+            EndCat();
+            EndCat();
+
             foreach (var key in intsplits.Keys)
                 splits[key.Normalize().ToLowerInvariant()] = key;
         }
