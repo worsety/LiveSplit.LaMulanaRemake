@@ -772,9 +772,12 @@
   <item id="byte-32f" value="mulbruk-moreaboutgods" comments="1=discover 2=talk" />
   <item id="byte-331" value="mulbruk-twinlabplat" comments="1=discover 2=talk" />
   <item id="byte-337" value="mulbruk-ocarina" comments="1=discover 2=talk" />
+  <item id="byte-338" value="end-start-animation" comments="1" />
   <item id="byte-348" value="devroom-combo-active" comments="toggle" />
   <item id="byte-349" value="mail-02" />
+  <item id="byte-34a" value="hell-dlc" comments="always 1 on pc" />
   <item id="byte-34c" value="mulbruk-father" comments="1=discover 2=talk 3=talk again 4=mouth 5=lots of statues like that" />
+  <item id="byte-34d" value="lamp-status" comments="hardcoded 0=empty lamp 1=full lamp" />
   <item id="byte-350" value="dim-trap-left" comments="1=trapped 2=cleared" />
   <item id="byte-351" value="dim-trap-right" comments="1=trapped 2=cleared" />
   <item id="byte-352" value="dim-trap-upper" comments="1=trapped 2=cleared" />
@@ -854,6 +857,7 @@
   <item id="byte-3e4" value="dimen-puz-fobos" comment="1" />
   <item id="byte-3e5" value="birth-puz-birth" comment="1" />
   <item id="byte-3e6" value="birth-puz-death" comment="1" />
+  <item id="byte-3e9" value="escape-fail" comment="instant death" />
   <item id="byte-3f0" value="spr-flood-lever" comments="1,2,3(dais)" />
   <item id="byte-3f1" value="dim-birth-death" comments="1=will spawn 2=spawned" />
   <item id="byte-3f7" value="esc-wall-coin" comments="1,2,3" />
